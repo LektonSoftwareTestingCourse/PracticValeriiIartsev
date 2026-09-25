@@ -1,0 +1,3 @@
+card_status	amount_vs_daily	amount_vs_monthly	amount_vs_balance	expiry	terminal_type	mcc
+BLOCKED	above	above	above	past	POS	5411
+ACTIVE	above	above	above	past	POS	5411

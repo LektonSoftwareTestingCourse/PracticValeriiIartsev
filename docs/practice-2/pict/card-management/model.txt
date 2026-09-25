@@ -1,0 +1,19 @@
+# POST /api/cards: CMS §2, §4; OpenAPI CardCreateRequest.
+bin_class: known_400000, known_400001, short, non_numeric
+holder_name: normal, max_length, missing, too_long
+currency: RUB, USD, invalid
+daily_limit: default, custom
+monthly_limit: default, custom
+initial_balance: default, zero, positive
+creation_date: september, year_end, year_start
+
+# Изолируем причины отказа: в строке не более одного невалидного поля.
+# Это сокращение покрытия; сочетания нескольких ошибок возможны, но исключены.
+IF [bin_class] IN {"short", "non_numeric"} THEN [holder_name] IN {"normal", "max_length"} AND [currency] IN {"RUB", "USD"};
+IF [holder_name] IN {"missing", "too_long"} THEN [bin_class] IN {"known_400000", "known_400001"} AND [currency] IN {"RUB", "USD"};
+IF [currency] = "invalid" THEN [bin_class] IN {"known_400000", "known_400001"} AND [holder_name] IN {"normal", "max_length"};
+
+# default: поле отсутствует; custom: dailyLimit=1200, monthlyLimit=1500.
+# initial_balance: default=поле отсутствует, zero=0, positive=1000.
+# Даты: 24.09.2026, 31.12.2026, 01.01.2027.
+# Статус и PAN не являются входными полями создания: их проверяем в ответе.

@@ -10,16 +10,15 @@ mcc: 5411, 5732, 5812, 3501
 #        - `restaurant` - рестораны (MCC 5812, 5814, суммы 500-5000 ₽)
 #        - `travel` - путешествия (MCC 3501, 4511, 4722, суммы 5 000-50 000 ₽)
 
-# Нужно для добавления 2-х отдельных кейсов
-scenario: baseline, status_priority, expiry_priority
+# В обычных проверках срока финансовые условия благоприятны.
+# Исключение для двух seed-кейсов: ACTIVE/BLOCKED, past, все above, POS, MCC 5411.
+IF [expiry] = "past" THEN ([amount_vs_daily] = "below" AND [amount_vs_monthly] = "below" AND [amount_vs_balance] = "below") OR ([card_status] IN {"ACTIVE", "BLOCKED"} AND [amount_vs_daily] = "above" AND [amount_vs_monthly] = "above" AND [amount_vs_balance] = "above" AND [terminal_type] = "POS" AND [mcc] = 5411);
 
-IF [scenario] = "baseline" AND [expiry] = "past" THEN [amount_vs_balance] = "below" AND [amount_vs_daily] = "below" AND [amount_vs_monthly] = "below";
-IF [scenario] = "baseline" AND [card_status] <> "ACTIVE" THEN [amount_vs_daily] = "below" AND [amount_vs_monthly] = "below" AND [amount_vs_balance] = "below" AND [expiry] = "future" AND [terminal_type] = "POS" AND [mcc] = 5411;
+# Изолированный отказ по статусу либо seed-кейс приоритета BLOCKED.
+IF [card_status] <> "ACTIVE" THEN ([expiry] = "future" AND [amount_vs_daily] = "below" AND [amount_vs_monthly] = "below" AND [amount_vs_balance] = "below") OR ([card_status] = "BLOCKED" AND [expiry] = "past" AND [amount_vs_daily] = "above" AND [amount_vs_monthly] = "above" AND [amount_vs_balance] = "above");
 
-# Кейс который пропустли на пред. шаге: проверка статуса имеет приоритет над сроком, лимитами и балансом.
-# Ожидание: DECLINED, CARD_BLOCKED; баланс и usage не изменяются.
-IF [scenario] = "status_priority" THEN [card_status] = "BLOCKED" AND [expiry] = "past" AND [amount_vs_daily] = "above" AND [amount_vs_monthly] = "above" AND [amount_vs_balance] = "above" AND [terminal_type] = "POS" AND [mcc] = 5411;
+# Для неактивных карт фиксируем терминал и MCC.
+IF [card_status] <> "ACTIVE" THEN [terminal_type] = "POS" AND [mcc] = 5411;
 
-# Кейс который пропустли на пред. шаге: срок имеет приоритет над лимитами и балансом.
-# Ожидание: DECLINED, 54; баланс и usage не изменяются.
-IF [scenario] = "expiry_priority" THEN [card_status] = "ACTIVE" AND [expiry] = "past" AND [amount_vs_daily] = "above" AND [amount_vs_monthly] = "above" AND [amount_vs_balance] = "above" AND [terminal_type] = "POS" AND [mcc] = 5411;
+# Seeds не отменяют ограничения: исключения выше разрешают закреплённые строки.
+# Генерировать с /e:docs/practice-2/pict/seeds.txt.
