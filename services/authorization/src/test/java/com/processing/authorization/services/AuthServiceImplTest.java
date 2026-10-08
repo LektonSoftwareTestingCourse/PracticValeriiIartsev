@@ -296,7 +296,7 @@ class AuthServiceImplTest {
                 card.dailyLimit(), card.monthlyLimit());
     }
 
-    @DisplayName("P-01–P-22: решения и приоритет отказов; расчёт SQL заменён test double")
+    @DisplayName("P-01–P-22: решения и приоритет отказов")
     @ParameterizedTest(name = "{0}: {1}, expiry={5}, code={8}")
     @CsvSource(value = {
             "P-01, BLOCKED, 99, 99, 99, 2026-08, POS, 5411, 05, CARD_BLOCKED",
