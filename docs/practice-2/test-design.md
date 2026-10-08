@@ -707,4 +707,3 @@ pict docs/practice-2/pict/card-management/model.txt /e:docs/practice-2/pict/card
 - **Предусловие:** общие условия CP; дата 24.09.2026; bin=400001, cardholderName=IVAN IVANOV, currencyCode=64A; dailyLimit — поле отсутствует, monthlyLimit — поле отсутствует, initialBalance — 1000.
 - **Шаги:** POST /api/cards с указанными полями; проверить ответ и число карт.
 - **Ожидается:** HTTP 400; число карт неизменно.
-
