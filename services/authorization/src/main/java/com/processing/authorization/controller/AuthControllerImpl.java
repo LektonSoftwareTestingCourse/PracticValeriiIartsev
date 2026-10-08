@@ -76,6 +76,7 @@ public class AuthControllerImpl implements AuthController {
             httpStatus = switch (declineReason) {
                 case REASON_CARD_NOT_FOUND -> HttpStatus.NOT_FOUND;
                 case REASON_SERVICE_UNAVAILABLE,
+                     REASON_ISSUER_TIMEOUT,
                      REASON_RESERVATION_FAILED -> HttpStatus.SERVICE_UNAVAILABLE;
                 case REASON_INSUFFICIENT_FUNDS -> HttpStatus.UNPROCESSABLE_ENTITY;
                 case REASON_CARD_EXPIRED,

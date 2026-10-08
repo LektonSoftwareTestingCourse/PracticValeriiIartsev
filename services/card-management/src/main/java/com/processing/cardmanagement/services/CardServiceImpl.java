@@ -19,10 +19,15 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @RequiredArgsConstructor
 public class CardServiceImpl implements CardService {
+
+    private static final BigDecimal DEFAULT_DAILY_LIMIT = new BigDecimal("15000000");
+    private static final BigDecimal DEFAULT_MONTHLY_LIMIT = new BigDecimal("300000000");
+    private static final BigDecimal DEFAULT_INITIAL_BALANCE = new BigDecimal("100000000");
 
     private final CardRepository cardRepository;
     private final ReservationRepository reservationRepository;
@@ -49,9 +54,9 @@ public class CardServiceImpl implements CardService {
             cardholderName,
             CardStatus.ACTIVE,
             currencyCode,
-            dailyLimit,
-            monthlyLimit,
-            initialBalance
+            dailyLimit != null ? dailyLimit : Objects.requireNonNullElse(defaults.dailyLimit(), DEFAULT_DAILY_LIMIT),
+            monthlyLimit != null ? monthlyLimit : Objects.requireNonNullElse(defaults.monthlyLimit(), DEFAULT_MONTHLY_LIMIT),
+            initialBalance != null ? initialBalance : Objects.requireNonNullElse(defaults.balance(), DEFAULT_INITIAL_BALANCE)
         );
 
         var issuerId = binIssuerService.getIssuerId(draft.bin());

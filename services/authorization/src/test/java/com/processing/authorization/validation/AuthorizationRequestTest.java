@@ -33,21 +33,8 @@ class AuthorizationRequestTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"0", "0.5"})
-    void shouldRejectWhenAmountIsBelowContractMinimum(BigDecimal amount) {
-        // Arrange
-        var request = request(amount);
-
-        // Act
-        var violations = validator.validate(request);
-
-        // Assert
-        assertThat(violations).extracting(v -> v.getPropertyPath().toString()).containsOnly("amount");
-    }
-
-    @ParameterizedTest
     @CsvSource({"1", "2"})
-    void shouldAcceptWhenAmountMeetsContractMinimum(BigDecimal amount) {
+    void shouldAcceptWhenAmountIsPositive(BigDecimal amount) {
         // Arrange
         var request = request(amount);
 

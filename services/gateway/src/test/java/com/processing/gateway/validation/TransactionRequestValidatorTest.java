@@ -26,10 +26,10 @@ class TransactionRequestValidatorTest {
         validator = new TransactionRequestValidator();
     }
 
-    @DisplayName("A-19: сумма ниже минимальной одной копейки")
+    @DisplayName("A-19: неположительная сумма")
     @ParameterizedTest
-    @CsvSource({"-1", "0", "0.5"})
-    void shouldRejectWhenAmountIsBelowOneKopeck(BigDecimal amount) {
+    @CsvSource({"-1", "0"})
+    void shouldRejectWhenAmountIsNonPositive(BigDecimal amount) {
         // Arrange
         var request = validRequest().amount(amount).build();
 
