@@ -1,0 +1,24 @@
+card_status: ACTIVE, INACTIVE, BLOCKED, EXPIRED
+amount_vs_daily: below, equal, above
+amount_vs_monthly: below, equal, above
+amount_vs_balance: below, equal, above
+expiry: future, current_month, past
+terminal_type: POS, ATM, ECOM
+mcc: 5411, 5732, 5812, 3501
+#        - `grocery` - продуктовые магазины (MCC 5411, 5499, суммы 100-3000 ₽)
+#        - `electronics` - электроника (MCC 5732, 5045, суммы 5 000-100 000 ₽)
+#        - `restaurant` - рестораны (MCC 5812, 5814, суммы 500-5000 ₽)
+#        - `travel` - путешествия (MCC 3501, 4511, 4722, суммы 5 000-50 000 ₽)
+
+# В обычных проверках срока финансовые условия благоприятны.
+# Исключение для двух seed-кейсов: ACTIVE/BLOCKED, past, все above, POS, MCC 5411.
+IF [expiry] = "past" THEN ([amount_vs_daily] = "below" AND [amount_vs_monthly] = "below" AND [amount_vs_balance] = "below") OR ([card_status] IN {"ACTIVE", "BLOCKED"} AND [amount_vs_daily] = "above" AND [amount_vs_monthly] = "above" AND [amount_vs_balance] = "above" AND [terminal_type] = "POS" AND [mcc] = 5411);
+
+# Изолированный отказ по статусу либо seed-кейс приоритета BLOCKED.
+IF [card_status] <> "ACTIVE" THEN ([expiry] = "future" AND [amount_vs_daily] = "below" AND [amount_vs_monthly] = "below" AND [amount_vs_balance] = "below") OR ([card_status] = "BLOCKED" AND [expiry] = "past" AND [amount_vs_daily] = "above" AND [amount_vs_monthly] = "above" AND [amount_vs_balance] = "above");
+
+# Для неактивных карт фиксируем терминал и MCC.
+IF [card_status] <> "ACTIVE" THEN [terminal_type] = "POS" AND [mcc] = 5411;
+
+# Seeds не отменяют ограничения: исключения выше разрешают закреплённые строки.
+# Генерировать с /e:docs/practice-2/pict/seeds.txt.

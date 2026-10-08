@@ -1,0 +1,4 @@
+bin_class	holder_name	currency	daily_limit	monthly_limit	initial_balance	creation_date
+known_400000	normal	RUB	default	default	default	september
+known_400001	max_length	USD	custom	custom	zero	year_end
+known_400000	normal	RUB	custom	custom	positive	year_start
