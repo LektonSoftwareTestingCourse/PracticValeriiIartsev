@@ -32,6 +32,8 @@ public record DeclineOutcome(String reason, String code) {
 
     public static final String REASON_SERVICE_UNAVAILABLE = "SERVICE_UNAVAILABLE";
 
+    public static final String REASON_ISSUER_TIMEOUT = "ISSUER_TIMEOUT";
+
     public static final String REASON_UNKNOWN_REASON = "UNKNOWN_REASON";
 
     public static final String REASON_CARD_EXPIRED = "CARD_EXPIRED";
@@ -61,6 +63,10 @@ public record DeclineOutcome(String reason, String code) {
     public static final DeclineOutcome SERVICE_UNAVAILABLE = new DeclineOutcome(
             REASON_SERVICE_UNAVAILABLE,
             AuthorizationResponse.CODE_SERVICE_UNAVAILABLE);
+
+    public static final DeclineOutcome ISSUER_TIMEOUT = new DeclineOutcome(
+            REASON_ISSUER_TIMEOUT,
+            AuthorizationResponse.CODE_DECLINED_GENERAL);
 
     public static final DeclineOutcome UNKNOWN_REASON = new DeclineOutcome(
             REASON_UNKNOWN_REASON,
