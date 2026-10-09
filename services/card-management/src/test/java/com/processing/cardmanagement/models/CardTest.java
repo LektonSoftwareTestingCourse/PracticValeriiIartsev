@@ -212,8 +212,19 @@ class CardTest {
     }
 
     private Card card(CardStatus status) {
-        return new Card(UUID.fromString("00000000-0000-0000-0000-000000000001"), "4000001234567899", "400000",
-                "IVAN IVANOV", YearMonth.of(2029, 9), status, "643", new BigDecimal("1000"),
-                new BigDecimal("10000"), new BigDecimal("100"), "ISS001", Instant.parse("2026-09-24T12:00:00Z"));
+        return new Card(
+                UUID.fromString("00000000-0000-0000-0000-000000000001"),
+                "4000001234567899",
+                "400000",
+                "IVAN IVANOV",
+                YearMonth.of(2029, 9),
+                status,
+                "643",
+                new BigDecimal("1000"),
+                new BigDecimal("10000"),
+                new BigDecimal("100"),
+                "ISS001",
+                Instant.parse("2026-09-24T12:00:00Z")
+        );
     }
 }

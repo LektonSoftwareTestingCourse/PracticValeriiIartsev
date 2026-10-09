@@ -17,9 +17,6 @@ class LuhnValidatorTest {
     @ParameterizedTest
     @ValueSource(strings = {"400000", "400001", "555555"})
     void shouldGenerateValidPanWhenBinIsValid(String bin) {
-        // Arrange
-        // The fixture is initialized in setUp().
-
         // Act
         var pan = validator.generatePan(bin);
 
@@ -38,9 +35,6 @@ class LuhnValidatorTest {
     @ParameterizedTest
     @CsvSource({"4000001234567899, true", "4000001234567890, false", "4111111111111111, true", "5555555555554444, true"})
     void shouldCheckControlDigitWhenPanContainsDigits(String pan, boolean expected) {
-        // Arrange
-        // The fixture is initialized in setUp().
-
         // Act
         var valid = validator.isValid(pan);
 

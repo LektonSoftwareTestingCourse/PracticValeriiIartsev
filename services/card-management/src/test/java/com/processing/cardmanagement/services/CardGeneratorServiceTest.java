@@ -40,8 +40,14 @@ class CardGeneratorServiceTest {
 
     @BeforeEach
     void setUp() {
-        var options = new CardGeneratorOptions(new BigDecimal("1000000"), new BigDecimal("50000000"),
-                new BigDecimal("5000000"), new BigDecimal("30000000"), "643", 100);
+        var options = new CardGeneratorOptions(
+                new BigDecimal("1000000"),
+                new BigDecimal("50000000"),
+                new BigDecimal("5000000"),
+                new BigDecimal("30000000"),
+                "643",
+                100
+        );
         service = new CardGeneratorService(cardService, options, eventNotifier);
     }
 

@@ -58,9 +58,6 @@ class TransactionRequestValidatorTest {
 
     @Test
     void shouldRejectWhenRequestIsMissing() {
-        // Arrange
-        // The fixture is initialized in setUp().
-
         // Act
         var error = catchThrowable(() -> validator.validate(null));
 
@@ -73,9 +70,6 @@ class TransactionRequestValidatorTest {
     @ParameterizedTest
     @MethodSource("invalidRequests")
     void shouldRejectWhenRequiredFieldIsInvalid(AuthorizationRequest request, String field) {
-        // Arrange
-        // The fixture is initialized in setUp().
-
         // Act
         var error = catchThrowable(() -> validator.validate(request));
 
@@ -109,10 +103,16 @@ class TransactionRequestValidatorTest {
 
     private static AuthorizationRequest.AuthorizationRequestBuilder validRequest() {
         return AuthorizationRequest.builder()
-                .mti("0100").stan("000001").pan("4000001234567899").processingCode("000000")
-                .amount(new BigDecimal("100")).currencyCode("643")
+                .mti("0100").stan("000001")
+                .pan("4000001234567899")
+                .processingCode("000000")
+                .amount(new BigDecimal("100"))
+                .currencyCode("643")
                 .transmissionDateTime(Instant.parse("2026-09-24T12:00:00Z"))
-                .terminalId("TERM0001").terminalType("POS").merchantId("MERCH0000000001")
-                .mcc("5411").acquirerId("ACQ001");
+                .terminalId("TERM0001")
+                .terminalType("POS")
+                .merchantId("MERCH0000000001")
+                .mcc("5411")
+                .acquirerId("ACQ001");
     }
 }

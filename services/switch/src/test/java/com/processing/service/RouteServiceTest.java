@@ -48,9 +48,21 @@ class RouteServiceTest {
 
     @BeforeEach
     void setUp() {
-        request = new AuthorizationRequest("0100", "000001", "4000001234567899", "000000", new BigDecimal("100"),
-                "643", Instant.parse("2026-09-24T12:00:00Z"), "TERM0001", "POS", "MERCH0000000001",
-                "5411", "ACQ001", null);
+        request = new AuthorizationRequest(
+                "0100",
+                "000001",
+                "4000001234567899",
+                "000000",
+                new BigDecimal("100"),
+                "643",
+                Instant.parse("2026-09-24T12:00:00Z"),
+                "TERM0001",
+                "POS",
+                "MERCH0000000001",
+                "5411",
+                "ACQ001",
+                null
+        );
     }
 
     @ParameterizedTest

@@ -23,7 +23,7 @@ class CreateCardRequestTest {
 
     @BeforeEach
     void setUp() {
-        // Match Spring's validator construction without starting an application context.
+        // Создаем валидатор без поднятия контекста
         factory = Validation.byDefaultProvider().configure()
                 .constraintValidatorFactory(new SpringConstraintValidatorFactory(new DefaultListableBeanFactory()))
                 .buildValidatorFactory();
@@ -50,7 +50,7 @@ class CreateCardRequestTest {
         assertThat(violations).extracting(v -> v.getPropertyPath().toString()).containsOnly("bin");
     }
 
-    @DisplayName("CP-01–CP-19: валидация DTO по тест-дизайну")
+    @DisplayName("CP-01–CP-19: валидация DTO")
     @ParameterizedTest(name = "{0}: expected invalid field = {7}")
     @CsvSource({
             "CP-01, 400000, normal, 643, default, default, default, none",
