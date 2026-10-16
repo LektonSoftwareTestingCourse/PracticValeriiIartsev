@@ -6,42 +6,7 @@
 
 ## Authorization
 
-```mermaid
-%% ceasg:{"id":"tranarxv"} %%
-%%{init: {"theme": "base", "look": "classic", "layout": "dagre", "themeVariables": {"fontFamily": "Arial, sans-serif", "edgeLabelBackground": "#ffffff00"}, "themeCSS": ".edgeLabel, .edgeLabel p, .labelBkg { background: transparent !important; } .edgeLabel rect, .labelBkg { fill: none !important; } .cluster-label span, .cluster-label p { color: #2563eb !important; } .cluster-label text { fill: #2563eb !important; }", "flowchart": {"curve": "linear", "nodeSpacing": 45, "rankSpacing": 70, "wrappingWidth": 300, "subGraphTitleMargin": {"top": 8, "bottom": 24}}}}%%
-flowchart TB
-    SW("<b>Switch</b><br/>[Container]")
-    subgraph AUTH["Authorization<br/>[Container]"]
-        AC["<b>AuthControllerImpl</b><br/>[Component]<br/>Валидация DTO, HTTP-статус"]
-        S["<b>AuthServiceImpl</b><br/>[Component]<br/>authorize / rollback"]
-        C["<b>CardManagementClientImpl</b><br/>[Component]<br/>HTTP-клиент · RestClient"]
-        B["<b>BinLookupClient</b><br/>[Component]<br/>RestClient, Optional fallback"]
-        R["<b>LimitUsageRepository</b><br/>[Component]<br/>native SQL + JPA"]
-        E["<b>AuthorizationEventNotifier</b><br/>[Component]<br/>Локальные события"]
-    end
-    CMS("<b>Card Management</b><br/>[Container]")
-    BIN("<b>BIN Lookup</b><br/>[Container]<br/>Эмулятор внешнего API")
-    DB[("<b>PostgreSQL</b><br/>[Container]<br/>limit_usage, rrn_seq")]
-
-    SW -->|"SYNC · HTTP<br/>authorize / rollback"| AC
-    AC -->|"Java"| S
-    S -->|"Java<br/>getCard / reserve / rollback"| C
-    S -->|"Java<br/>getIssuerId"| B
-    S -->|"Java<br/>upsertLimitUsage / fetchRrnBlock"| R
-    S -->|"Java<br/>notify"| E
-    C -->|"SYNC · HTTP"| CMS
-    B -->|"SYNC · HTTP<br/>GET /api/bin/{bin}"| BIN
-    R -->|"SYNC · JDBC"| DB
-
-    classDef component fill:#eff6ff,stroke:#2563eb,stroke-width:2px,color:#1e40af
-    classDef internal fill:#eff6ff,stroke:#2563eb,stroke-width:2px,color:#1e40af
-    classDef external fill:#fef2f2,stroke:#b91c1c,stroke-width:2px,color:#991b1b
-    linkStyle default stroke:#64748b,stroke-width:1.5px;
-    class AC,S,C,B,R,E component
-    class SW,CMS,DB internal
-    class BIN external
-    style AUTH fill:none,stroke:#2563eb,stroke-width:2px,color:#2563eb
-```
+![alt text](../content/A3-component.png)
 
 Основания: [AuthControllerImpl][authcontroller], [AuthServiceImpl][auth], [CardManagementClientImpl][cmsclient], [BinLookupClient][binclient], [LimitUsageRepository][limits].
 
@@ -54,7 +19,7 @@ flowchart TB
 ## Card Management
 
 ```mermaid
-%%{init: {"theme":"base","themeVariables":{"fontFamily":"Arial, sans-serif","edgeLabelBackground":"#ffffff00"},"flowchart":{"nodeSpacing":45,"rankSpacing":70}}}%%
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"Arial, sans-serif","edgeLabelBackground":"#ffffff00"},"flowchart":{"nodeSpacing":45,"rankSpacing":70,"wrappingWidth":340,"htmlLabels":true},"look":"classic","layout":"dagre","fontFamily":"Arial, sans-serif","markdownAutoWrap":false,"themeCSS":".nodeLabel, .edgeLabel, .cluster-label { font-family: Arial, sans-serif !important; white-space: nowrap !important; }"}}%%
 flowchart TB
     subgraph CMS ["Card Management<br/>[Container]"]
         CGC["<b>CardGeneratorController</b><br/>[Component]"]

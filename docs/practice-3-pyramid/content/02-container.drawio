@@ -1,0 +1,350 @@
+<mxfile host="65bd71144e" compressed="false" pages="1">
+    <diagram id="02-container-1" name="Контейнеры">
+        <mxGraphModel dx="3800" dy="1921" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="2770" pageHeight="2250" background="#ffffff" math="0" shadow="0" adaptiveColors="auto">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="page-title" parent="1" style="html=1;fontFamily=Arial;text;strokeColor=none;fillColor=none;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=28;fontColor=#0f172a;fontStyle=1;spacing=0;" value="А2 · Контейнеры и интеграции" vertex="1">
+                    <mxGeometry height="44" width="2700" y="230" as="geometry"/>
+                </mxCell>
+                <mxCell id="SMP" parent="1" style="html=1;fontFamily=Arial;shape=swimlane;horizontal=1;startSize=66;rounded=1;arcSize=8;fillColor=#f8fafc;swimlaneFillColor=#ffffff;strokeColor=#2563eb;strokeWidth=1.5;fontColor=#2563eb;fontSize=18;fontStyle=1;align=left;spacingLeft=22;whiteSpace=wrap;collapsible=0;" value="СМП — Симулятор процессингового центра&lt;br&gt;[Software System]" vertex="1">
+                    <mxGeometry height="1710" width="1740" x="455" y="305" as="geometry"/>
+                </mxCell>
+                <mxCell id="WEB" parent="SMP" style="html=1;fontFamily=Arial;rounded=1;arcSize=12;whiteSpace=wrap;fillColor=#eff6ff;strokeColor=#2563eb;strokeWidth=1.5;fontColor=#1e3a8a;fontSize=15;spacing=14;" value="&lt;b&gt;Dashboard&lt;/b&gt;&lt;br&gt;[Container]&lt;br&gt;React SPA + nginx :3000" vertex="1">
+                    <mxGeometry height="100" width="235" x="120" y="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="GW" parent="SMP" style="html=1;fontFamily=Arial;rounded=1;arcSize=12;whiteSpace=wrap;fillColor=#eff6ff;strokeColor=#2563eb;strokeWidth=1.5;fontColor=#1e3a8a;fontSize=15;spacing=14;" value="&lt;b&gt;Gateway&lt;/b&gt;&lt;br&gt;[Container]&lt;br&gt;Spring Cloud Gateway :8080" vertex="1">
+                    <mxGeometry height="100" width="237" x="630" y="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="LOG" parent="SMP" style="html=1;fontFamily=Arial;rounded=1;arcSize=12;whiteSpace=wrap;fillColor=#eff6ff;strokeColor=#2563eb;strokeWidth=1.5;fontColor=#1e3a8a;fontSize=15;spacing=14;" value="&lt;b&gt;Transaction Logger&lt;/b&gt;&lt;br/&gt;[Container]&lt;br/&gt;Spring Boot :8088" vertex="1">
+                    <mxGeometry height="100" width="235" x="120" y="1020" as="geometry"/>
+                </mxCell>
+                <mxCell id="CMS" parent="SMP" style="html=1;fontFamily=Arial;rounded=1;arcSize=12;whiteSpace=wrap;fillColor=#eff6ff;strokeColor=#2563eb;strokeWidth=1.5;fontColor=#1e3a8a;fontSize=15;spacing=14;" value="&lt;b&gt;Card Management&lt;/b&gt;&lt;br/&gt;[Container]&lt;br/&gt;Spring Boot :8081&lt;br/&gt;CRUD + outbox worker" vertex="1">
+                    <mxGeometry height="122" width="235" x="630" y="580" as="geometry"/>
+                </mxCell>
+                <mxCell id="SW" parent="SMP" style="html=1;fontFamily=Arial;rounded=1;arcSize=12;whiteSpace=wrap;fillColor=#eff6ff;strokeColor=#2563eb;strokeWidth=1.5;fontColor=#1e3a8a;fontSize=15;spacing=14;" value="&lt;b&gt;Switch&lt;/b&gt;&lt;br/&gt;[Container]&lt;br/&gt;Spring Boot :8082" vertex="1">
+                    <mxGeometry height="100" width="235" x="1240" y="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="R" parent="SMP" style="html=1;fontFamily=Arial;rounded=1;arcSize=12;whiteSpace=wrap;fillColor=#f5f3ff;strokeColor=#7c3aed;strokeWidth=1.5;fontColor=#5b21b6;fontSize=15;spacing=14;shape=process;" value="&lt;b&gt;RabbitMQ&lt;/b&gt;&lt;br/&gt;[Container]&lt;br/&gt;AMQP :5672&lt;br/&gt;Management :15672" vertex="1">
+                    <mxGeometry height="122" width="235" x="630" y="1020" as="geometry"/>
+                </mxCell>
+                <mxCell id="A" parent="SMP" style="html=1;fontFamily=Arial;rounded=1;arcSize=12;whiteSpace=wrap;fillColor=#eff6ff;strokeColor=#2563eb;strokeWidth=1.5;fontColor=#1e3a8a;fontSize=15;spacing=14;" value="&lt;b&gt;Authorization&lt;/b&gt;&lt;br/&gt;[Container]&lt;br/&gt;Spring Boot :8083" vertex="1">
+                    <mxGeometry height="100" width="235" x="1240" y="580" as="geometry"/>
+                </mxCell>
+                <mxCell id="N" parent="SMP" style="html=1;fontFamily=Arial;rounded=1;arcSize=12;whiteSpace=wrap;fillColor=#eff6ff;strokeColor=#2563eb;strokeWidth=1.5;fontColor=#1e3a8a;fontSize=15;spacing=14;" value="&lt;b&gt;Notification Service&lt;/b&gt;&lt;br/&gt;[Container]&lt;br/&gt;Spring Boot :8097" vertex="1">
+                    <mxGeometry height="100" width="235" x="1240" y="1020" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-2" edge="1" parent="SMP" source="WEB" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=1.00000;exitY=0.50000;exitDx=0;exitDy=0;entryX=0.00000;entryY=0.30000;entryDx=0;entryDy=0;" target="GW" value="SYNC · HTTP&lt;br&gt;API">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="27.5" y="-32" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="390" y="190"/>
+                            <mxPoint x="390" y="170"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-5" edge="1" parent="SMP" source="GW" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=1.00000;exitY=0.40000;exitDx=0;exitDy=0;entryX=0.00000;entryY=0.40000;entryDx=0;entryDy=0;" target="SW" value="SYNC · HTTP&lt;br&gt;маршрутизация">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint y="-32" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-6" edge="1" parent="SMP" source="SW" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=0.34043;exitY=1.00000;exitDx=0;exitDy=0;entryX=0.51064;entryY=0.00000;entryDx=0;entryDy=0;" target="A" value="SYNC · HTTP/JSON&lt;br&gt;авторизация / откат">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-79.5" y="-35" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="1320" y="550"/>
+                            <mxPoint x="1360" y="550"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-7" edge="1" parent="SMP" source="A" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=0.00000;exitY=0.50000;exitDx=0;exitDy=0;entryX=1.00000;entryY=0.49180;entryDx=0;entryDy=0;" target="CMS" value="SYNC · HTTP/JSON&lt;br&gt;карта / резерв / откат">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-20" y="-32" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="1210" y="630"/>
+                            <mxPoint x="1210" y="640"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-11" edge="1" parent="SMP" source="GW" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=0.42194;exitY=1.00000;exitDx=0;exitDy=0;entryX=0.51064;entryY=0.00000;entryDx=0;entryDy=0;" target="CMS" value="SYNC · HTTP&lt;br&gt;CRUD карт">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="60" y="-25" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="730" y="550"/>
+                            <mxPoint x="750" y="550"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-12" edge="1" parent="SMP" source="GW" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=0.59072;exitY=1.00000;exitDx=0;exitDy=0;entryX=0.34043;entryY=0.00000;entryDx=0;entryDy=0;" target="LOG" value="SYNC · HTTP&lt;br&gt;поиск и статистика">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="45" y="-32" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="770" y="260"/>
+                            <mxPoint x="700" y="260"/>
+                            <mxPoint x="700" y="550"/>
+                            <mxPoint x="200" y="550"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-15" edge="1" parent="SMP" source="SW" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=0.63830;exitY=1.00000;exitDx=0;exitDy=0;entryX=0.38298;entryY=0.00000;entryDx=0;entryDy=0;dashed=1;dashPattern=6 4;strokeColor=#7c3aed;fontColor=#6d28d9;" target="R" value="ASYNC · AMQP&lt;br&gt;smp.transactions">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-390" y="-27" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="1390" y="270"/>
+                            <mxPoint x="1500" y="270"/>
+                            <mxPoint x="1500" y="970"/>
+                            <mxPoint x="720" y="970"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-16" edge="1" parent="SMP" source="CMS" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=0.38298;exitY=1.00000;exitDx=0;exitDy=0;entryX=0.63830;entryY=0.00000;entryDx=0;entryDy=0;dashed=1;dashPattern=6 4;strokeColor=#7c3aed;fontColor=#6d28d9;" target="R" value="ASYNC · AMQP&lt;br&gt;smp.card-events">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-67.5" y="49" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="720" y="740"/>
+                            <mxPoint x="780" y="740"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-17" edge="1" parent="SMP" source="R" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=0.00000;exitY=0.49180;exitDx=0;exitDy=0;entryX=1.00000;entryY=0.40000;entryDx=0;entryDy=0;dashed=1;dashPattern=6 4;strokeColor=#7c3aed;fontColor=#6d28d9;" target="LOG" value="ASYNC · AMQP&lt;br&gt;transaction-log">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-25" y="-32" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="600" y="1080"/>
+                            <mxPoint x="600" y="1060"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-18" edge="1" parent="SMP" source="R" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=1.00000;exitY=0.49180;exitDx=0;exitDy=0;entryX=0.00000;entryY=0.40000;entryDx=0;entryDy=0;dashed=1;dashPattern=6 4;strokeColor=#7c3aed;fontColor=#6d28d9;" target="N" value="ASYNC · AMQP&lt;br&gt;card-notifications">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="27.5" y="-32" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="900" y="1080"/>
+                            <mxPoint x="900" y="1060"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-20" edge="1" parent="SMP" source="CMS" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=0.63830;exitY=1.00000;exitDx=0;exitDy=0;entryX=0.365;entryY=0.003;entryDx=0;entryDy=0;entryPerimeter=0;" target="Qg_BWuLhnUxtphvIfXuA-1" value="SYNC · JDBC">
+                    <mxGeometry relative="1" x="-0.0046" as="geometry">
+                        <mxPoint x="-60" y="29" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="780" y="730"/>
+                            <mxPoint x="590" y="730"/>
+                            <mxPoint x="590" y="1430"/>
+                            <mxPoint x="719.6" y="1430"/>
+                        </Array>
+                        <mxPoint x="715.0002999999999" y="1445" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-21" edge="1" parent="SMP" source="A" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=0.51064;exitY=1.00000;exitDx=0;exitDy=0;entryX=0.677;entryY=0.026;entryDx=0;entryDy=0;entryPerimeter=0;" target="Qg_BWuLhnUxtphvIfXuA-1" value="SYNC · JDBC">
+                    <mxGeometry relative="1" x="-0.0309" as="geometry">
+                        <mxPoint x="-80" y="330" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="1360" y="710"/>
+                            <mxPoint x="910" y="710"/>
+                            <mxPoint x="910" y="1050"/>
+                            <mxPoint x="890" y="1050"/>
+                            <mxPoint x="890" y="1430"/>
+                            <mxPoint x="805" y="1430"/>
+                            <mxPoint x="805" y="1415"/>
+                            <mxPoint x="774.8" y="1415"/>
+                        </Array>
+                        <mxPoint x="775.0005000000001" y="1445" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-23" edge="1" parent="SMP" source="LOG" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=1.00000;exitY=0.60000;exitDx=0;exitDy=0;entryX=0;entryY=0.59;entryDx=0;entryDy=0;entryPerimeter=0;" target="Qg_BWuLhnUxtphvIfXuA-1" value="SYNC · JDBC">
+                    <mxGeometry relative="1" x="-0.0188" as="geometry">
+                        <mxPoint x="-60" y="-102.5" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="390" y="1080"/>
+                            <mxPoint x="390" y="1519.9"/>
+                        </Array>
+                        <mxPoint x="625" y="1505" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-24" edge="1" parent="SMP" source="N" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=0.00000;exitY=0.60000;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="Qg_BWuLhnUxtphvIfXuA-1" value="SYNC · JDBC">
+                    <mxGeometry relative="1" x="-0.0143" as="geometry">
+                        <mxPoint x="-60" y="-157.5" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="1210" y="1080"/>
+                            <mxPoint x="1210" y="1510"/>
+                        </Array>
+                        <mxPoint x="860" y="1495" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="Qg_BWuLhnUxtphvIfXuA-1" parent="SMP" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" value="&lt;b style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgba(168, 169, 170, 0.52) rgb(18, 19, 20); font-family: Arial; font-size: 15px;&quot;&gt;PostgreSQL&lt;/b&gt;&lt;br style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgba(168, 169, 170, 0.52) rgb(18, 19, 20); font-family: Arial; font-size: 15px;&quot;&gt;&lt;span style=&quot;color: rgb(51, 65, 85); font-family: Arial; font-size: 15px;&quot;&gt;[Container]&lt;/span&gt;&lt;br style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgba(168, 169, 170, 0.52) rgb(18, 19, 20); font-family: Arial; font-size: 15px;&quot;&gt;&lt;span style=&quot;color: rgb(51, 65, 85); font-family: Arial; font-size: 15px;&quot;&gt;База данных :5432&lt;/span&gt;" vertex="1">
+                    <mxGeometry height="110" width="177" x="655" y="1455" as="geometry"/>
+                </mxCell>
+                <mxCell id="OPS" parent="1" style="html=1;fontFamily=Arial;shape=swimlane;horizontal=1;startSize=66;rounded=1;arcSize=8;fillColor=#f8fafc;swimlaneFillColor=#ffffff;strokeColor=#64748b;strokeWidth=1.5;fontColor=#64748b;fontSize=18;fontStyle=1;align=left;spacingLeft=22;whiteSpace=wrap;collapsible=0;" value="Управление стендом · профиль observability" vertex="1">
+                    <mxGeometry height="850" width="450" x="2235" y="305" as="geometry"/>
+                </mxCell>
+                <mxCell id="AS" parent="OPS" style="html=1;fontFamily=Arial;rounded=1;arcSize=12;whiteSpace=wrap;fillColor=#eff6ff;strokeColor=#2563eb;strokeWidth=1.5;fontColor=#1e3a8a;fontSize=15;spacing=14;" value="&lt;b&gt;Autoscaler — 11-й сервис&lt;/b&gt;&lt;br/&gt;[Container]&lt;br/&gt;Bash + Docker CLI&lt;br/&gt;Проверка нагрузки каждые 15 с" vertex="1">
+                    <mxGeometry height="122" width="310" x="80" y="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="PROM" parent="OPS" style="html=1;fontFamily=Arial;rounded=1;arcSize=12;whiteSpace=wrap;fillColor=#f1f5f9;strokeColor=#64748b;strokeWidth=1.5;fontColor=#334155;fontSize=15;spacing=14;" value="&lt;b&gt;Prometheus&lt;/b&gt;&lt;br/&gt;[Infrastructure Container]&lt;br/&gt;Метрики нагрузки :9090" vertex="1">
+                    <mxGeometry height="100" width="290" x="80" y="560" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-25" edge="1" parent="OPS" source="AS" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=0.35484;exitY=1.00000;exitDx=0;exitDy=0;entryX=0.48276;entryY=0.00000;entryDx=0;entryDy=0;" target="PROM" value="SYNC · HTTP/JSON&lt;br&gt;GET /api/v1/query · RPS&lt;br&gt;Gateway">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="91.5" y="-30" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="190" y="530"/>
+                            <mxPoint x="220" y="530"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="U" parent="1" style="html=1;fontFamily=Arial;rounded=1;arcSize=12;whiteSpace=wrap;fillColor=#ecfdf5;strokeColor=#059669;strokeWidth=1.5;fontColor=#065f46;fontSize=15;spacing=14;" value="&lt;b&gt;Пользователь Dashboard&lt;/b&gt;&lt;br&gt;[Person]" vertex="1">
+                    <mxGeometry height="85" width="235" x="95" y="445" as="geometry"/>
+                </mxCell>
+                <mxCell id="T" parent="1" style="html=1;fontFamily=Arial;rounded=1;arcSize=12;whiteSpace=wrap;fillColor=#fff1f2;strokeColor=#be123c;strokeWidth=1.5;fontColor=#881337;fontSize=15;spacing=14;" value="&lt;b&gt;Terminal Simulator&lt;/b&gt;&lt;br&gt;[Container]&lt;br&gt;Spring Boot :8085" vertex="1">
+                    <mxGeometry height="100" width="235" x="95" y="865" as="geometry"/>
+                </mxCell>
+                <mxCell id="M" parent="1" style="html=1;fontFamily=Arial;rounded=1;arcSize=12;whiteSpace=wrap;fillColor=#fff1f2;strokeColor=#be123c;strokeWidth=1.5;fontColor=#881337;fontSize=15;spacing=14;" value="&lt;b&gt;Merchant Acquirer&lt;/b&gt;&lt;br&gt;[Container]&lt;br&gt;Spring Boot :8084" vertex="1">
+                    <mxGeometry height="100" width="235" x="95" y="1405" as="geometry"/>
+                </mxCell>
+                <mxCell id="BIN" parent="1" style="html=1;fontFamily=Arial;rounded=1;arcSize=12;whiteSpace=wrap;fillColor=#fff1f2;strokeColor=#be123c;strokeWidth=1.5;fontColor=#881337;fontSize=15;spacing=14;" value="&lt;b&gt;BIN Lookup&lt;/b&gt;&lt;br&gt;[Container]&lt;br&gt;Spring Boot :8096" vertex="1">
+                    <mxGeometry height="100" width="235" x="2315" y="1325" as="geometry"/>
+                </mxCell>
+                <mxCell id="DOCKER" parent="1" style="html=1;fontFamily=Arial;rounded=1;arcSize=12;whiteSpace=wrap;fillColor=#f1f5f9;strokeColor=#64748b;strokeWidth=1.5;fontColor=#334155;fontSize=15;spacing=14;" value="&lt;b&gt;Docker Engine&lt;/b&gt;&lt;br/&gt;[Infrastructure]&lt;br/&gt;Unix socket хоста" vertex="1">
+                    <mxGeometry height="100" width="235" x="2315" y="1765" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-1" edge="1" parent="1" source="U" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=1.00000;exitY=0.47059;exitDx=0;exitDy=0;entryX=0.00000;entryY=0.50000;entryDx=0;entryDy=0;" target="WEB" value="SYNC · HTTP&lt;br&gt;SPA и REST/JSON">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="22.5" y="-32" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="365" y="485"/>
+                            <mxPoint x="365" y="495"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-3" edge="1" parent="1" source="T" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=1.00000;exitY=0.30000;exitDx=0;exitDy=0;entryX=0.00000;entryY=0.50000;entryDx=0;entryDy=0;" target="GW" value="SYNC · HTTP/JSON&lt;br&gt;транзакции">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="68" y="-200" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="1055" y="895"/>
+                            <mxPoint x="1055" y="495"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-4" edge="1" parent="1" source="M" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=0.34043;exitY=0.00000;exitDx=0;exitDy=0;entryX=0.25316;entryY=1.00000;entryDx=0;entryDy=0;" target="GW" value="SYNC · HTTP/JSON&lt;br&gt;транзакции и карты">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="395" y="-63" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="175" y="1375"/>
+                            <mxPoint x="355" y="1375"/>
+                            <mxPoint x="355" y="575"/>
+                            <mxPoint x="1145" y="575"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-8" edge="1" parent="1" source="A" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=1.00000;exitY=0.50000;exitDx=0;exitDy=0;entryX=0.00000;entryY=0.50000;entryDx=0;entryDy=0;" target="BIN" value="SYNC · HTTP/JSON&lt;br&gt;эмитент по BIN">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="79.5" y="-157.5" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="1965" y="935"/>
+                            <mxPoint x="1965" y="1375"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-9" edge="1" parent="1" source="T" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=1.00000;exitY=0.40000;exitDx=0;exitDy=0;entryX=0.00000;entryY=0.49180;entryDx=0;entryDy=0;" target="CMS" value="SYNC · HTTP/JSON&lt;br&gt;карты">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="181.5" y="32" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="365" y="905"/>
+                            <mxPoint x="365" y="945"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-10" edge="1" parent="1" source="SW" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=0.00000;exitY=0.60000;exitDx=0;exitDy=0;entryX=1.00000;entryY=0.40000;entryDx=0;entryDy=0;" target="M" value="SYNC · HTTP/JSON&lt;br&gt;комиссия">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="187.5" y="-758" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="1345" y="505"/>
+                            <mxPoint x="1345" y="1295"/>
+                            <mxPoint x="365" y="1295"/>
+                            <mxPoint x="365" y="1445"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-13" edge="1" parent="1" source="GW" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=0.00000;exitY=0.70000;exitDx=0;exitDy=0;entryX=1.00000;entryY=0.60000;entryDx=0;entryDy=0;" target="T" value="SYNC · HTTP&lt;br&gt;симуляция">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-227.5" y="-32" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="835" y="515"/>
+                            <mxPoint x="835" y="845"/>
+                            <mxPoint x="375" y="845"/>
+                            <mxPoint x="375" y="925"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-14" edge="1" parent="1" source="GW" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=0.75949;exitY=1.00000;exitDx=0;exitDy=0;entryX=0.63830;entryY=0.00000;entryDx=0;entryDy=0;" target="M" value="SYNC · HTTP&lt;br&gt;симуляция">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-355" y="-32" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="1265" y="575"/>
+                            <mxPoint x="1355" y="575"/>
+                            <mxPoint x="1355" y="1285"/>
+                            <mxPoint x="245" y="1285"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-19" edge="1" parent="1" source="LOG" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=0.63830;exitY=0.00000;exitDx=0;exitDy=0;entryX=0.51064;entryY=1.00000;entryDx=0;entryDy=0;dashed=1;dashPattern=6 4;strokeColor=#7c3aed;fontColor=#6d28d9;" target="U" value="ASYNC · WebSocket/JSON&lt;br&gt;через nginx Dashboard">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-97" y="-210" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="725" y="985"/>
+                            <mxPoint x="65" y="985"/>
+                            <mxPoint x="65" y="565"/>
+                            <mxPoint x="215" y="565"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-22" edge="1" parent="1" source="M" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=1.00000;exitY=0.60000;exitDx=0;exitDy=0;entryX=-0.004;entryY=0.402;entryDx=0;entryDy=0;entryPerimeter=0;" target="Qg_BWuLhnUxtphvIfXuA-1" value="SYNC · JDBC">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-112.5" y="-170" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="365" y="1465"/>
+                            <mxPoint x="365" y="1804.2"/>
+                        </Array>
+                        <mxPoint x="1080" y="1790" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-26" edge="1" parent="1" source="PROM" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=0.00000;exitY=0.50000;exitDx=0;exitDy=0;entryX=1.00000;entryY=0.60000;entryDx=0;entryDy=0;" target="GW" value="SYNC · HTTP&lt;br&gt;GET /actuator/prometheus">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="225.5" y="175" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="2285" y="915"/>
+                            <mxPoint x="2285" y="565"/>
+                            <mxPoint x="1355" y="565"/>
+                            <mxPoint x="1355" y="505"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-27" edge="1" parent="1" source="AS" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=0.64516;exitY=1.00000;exitDx=0;exitDy=0;entryX=0.51064;entryY=0.00000;entryDx=0;entryDy=0;" target="DOCKER" value="SYNC · Docker API через Unix&lt;br&gt;socket&lt;br&gt;docker compose ps / up --scale">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-110.5" y="-36" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="2515" y="605"/>
+                            <mxPoint x="2625" y="605"/>
+                            <mxPoint x="2625" y="1735"/>
+                            <mxPoint x="2435" y="1735"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-28" edge="1" parent="1" source="DOCKER" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=0.00000;exitY=0.50000;exitDx=0;exitDy=0;entryX=1.00000;entryY=0.70000;entryDx=0;entryDy=0;" target="T" value="Управление контейнерами&lt;br&gt;число экземпляров">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-606.5" y="-215" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="2285" y="1815"/>
+                            <mxPoint x="2285" y="1885"/>
+                            <mxPoint x="355" y="1885"/>
+                            <mxPoint x="355" y="1455"/>
+                            <mxPoint x="375" y="1455"/>
+                            <mxPoint x="375" y="935"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

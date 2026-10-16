@@ -1,0 +1,74 @@
+<mxfile host="65bd71144e" compressed="false" pages="1">
+    <diagram id="01-context-1" name="Контекст">
+        <mxGraphModel dx="1663" dy="1180" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1834" pageHeight="877" background="#ffffff" math="0" shadow="0" adaptiveColors="auto">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="page-title" parent="1" style="html=1;fontFamily=Arial;text;strokeColor=none;fillColor=none;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=28;fontColor=#0f172a;fontStyle=1;spacing=0;" value="А1 · Контекст системы" vertex="1">
+                    <mxGeometry height="44" width="1764" x="35" y="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="T" parent="1" style="html=1;fontFamily=Arial;rounded=1;arcSize=12;whiteSpace=wrap;fillColor=#fff1f2;strokeColor=#be123c;strokeWidth=1.5;fontColor=#881337;fontSize=15;spacing=14;" value="&lt;b&gt;Terminal Simulator&lt;/b&gt;&lt;br/&gt;[Software System]&lt;br/&gt;Эмулирует POS-транзакции" vertex="1">
+                    <mxGeometry height="100" width="246" x="122" y="413" as="geometry"/>
+                </mxCell>
+                <mxCell id="M" parent="1" style="html=1;fontFamily=Arial;rounded=1;arcSize=12;whiteSpace=wrap;fillColor=#fff1f2;strokeColor=#be123c;strokeWidth=1.5;fontColor=#881337;fontSize=15;spacing=14;" value="&lt;b&gt;Merchant Acquirer&lt;/b&gt;&lt;br/&gt;[Software System]&lt;br/&gt;Эмулирует покупки и рассчитывает&lt;br/&gt;комиссию эквайринга" vertex="1">
+                    <mxGeometry height="122" width="298" x="70" y="578" as="geometry"/>
+                </mxCell>
+                <mxCell id="U" parent="1" style="html=1;fontFamily=Arial;rounded=1;arcSize=12;whiteSpace=wrap;fillColor=#ecfdf5;strokeColor=#059669;strokeWidth=1.5;fontColor=#065f46;fontSize=15;spacing=14;" value="&lt;b&gt;Пользователь Dashboard&lt;/b&gt;&lt;br/&gt;[Person]&lt;br/&gt;Просматривает транзакции&lt;br/&gt;и статистику процессинга" vertex="1">
+                    <mxGeometry height="122" width="239" x="129" y="226" as="geometry"/>
+                </mxCell>
+                <mxCell id="S" parent="1" style="html=1;fontFamily=Arial;rounded=1;arcSize=12;whiteSpace=wrap;fillColor=#eff6ff;strokeColor=#2563eb;strokeWidth=1.5;fontColor=#1e3a8a;fontSize=15;spacing=14;" value="&lt;b&gt;СМП&lt;/b&gt;&lt;br/&gt;[Software System]&lt;br/&gt;Авторизация, карты, журнал,&lt;br/&gt;уведомления и Dashboard" vertex="1">
+                    <mxGeometry height="122" width="251" x="838" y="402" as="geometry"/>
+                </mxCell>
+                <mxCell id="B" parent="1" style="html=1;fontFamily=Arial;rounded=1;arcSize=12;whiteSpace=wrap;fillColor=#fff1f2;strokeColor=#be123c;strokeWidth=1.5;fontColor=#881337;fontSize=15;spacing=14;" value="&lt;b&gt;BIN Lookup&lt;/b&gt;&lt;br/&gt;[Software System]&lt;br/&gt;Определяет эмитента по BIN карты" vertex="1">
+                    <mxGeometry height="100" width="297" x="1467" y="413" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-1" edge="1" parent="1" source="T" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=1.00000;exitY=0.50000;exitDx=0;exitDy=0;entryX=0.00000;entryY=0.50000;entryDx=0;entryDy=0;" target="S" value="SYNC · HTTP/JSON">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint y="16" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-2" edge="1" parent="1" source="M" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=1.00000;exitY=0.33607;exitDx=0;exitDy=0;entryX=0.00000;entryY=0.66393;entryDx=0;entryDy=0;" target="S" value="SYNC · HTTP/JSON">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-68" y="-16" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="763" y="619"/>
+                            <mxPoint x="763" y="483"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-3" edge="1" parent="1" source="S" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=0.00000;exitY=0.83607;exitDx=0;exitDy=0;entryX=1.00000;entryY=0.66393;entryDx=0;entryDy=0;" target="M" value="Запрашивает комиссию&lt;br&gt;SYNC · HTTP/JSON">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-77.5" y="25" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="785" y="504"/>
+                            <mxPoint x="785" y="659"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-4" edge="1" parent="1" source="U" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=1.00000;exitY=0.33607;exitDx=0;exitDy=0;entryX=0.00000;entryY=0.16393;entryDx=0;entryDy=0;" target="S" value="Загружает SPA и вызывает REST API&lt;br&gt;SYNC · HTTP/JSON">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-77.5" y="-25" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="785" y="267"/>
+                            <mxPoint x="785" y="422"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-5" edge="1" parent="1" source="S" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#000000;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=0.00000;exitY=0.33607;exitDx=0;exitDy=0;entryX=1.00000;entryY=0.66393;entryDx=0;entryDy=0;dashed=1;dashPattern=6 4;strokeColor=#7c3aed;fontColor=#6d28d9;" target="U" value="Отправляет обновления транзакций&lt;br&gt;ASYNC · WebSocket/JSON">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-68" y="25" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="763" y="443"/>
+                            <mxPoint x="763" y="307"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-6" edge="1" parent="1" source="S" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=1.00000;exitY=0.50000;exitDx=0;exitDy=0;entryX=0.00000;entryY=0.50000;entryDx=0;entryDy=0;" target="B" value="Запрашивает эмитента&lt;br&gt;SYNC · HTTP/JSON">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint y="25" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

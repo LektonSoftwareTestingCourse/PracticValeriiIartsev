@@ -2,48 +2,12 @@
 
 ## Чего не хватало и что добавлено
 
-В [архитектуре][oldarch] есть таблица маршрутов, но нет полной схемы main exchange → queue → consumer и DLX/DLQ. Ниже визуализированы оба потока, точные routing key, TTL и места ошибок. Отдельно разобраны три разных механизма: publisher confirm, повтор публикации outbox и повтор обработки consumer. Их нельзя обозначать одним «retry 3».
+В [архитектуре][oldarch] есть таблица маршрутов, но нет полной схемы main exchange → queue → consumer и DLX/DLQ. Ниже визуализированы оба потока, точные routing key, TTL и места ошибок. Отдельно разобраны три разных механизма: publisher confirm, повтор публикации outbox и повтор обработки consumer.
 
-Пунктирные стрелки — асинхронный AMQP-поток, сплошные — локальная работа/синхронный JDBC. DLQ-стрелка означает маршрут **при dead-lettering**, а не обещание, что любое исключение автоматически попадёт туда после третьего раза.
+Пунктирные стрелки — асинхронный AMQP-поток, сплошные — локальная работа/синхронный JDBC. Стрелки в DLQ показывают маршруты dead-lettering; количество попыток обработки разобрано отдельно ниже.
 
-```mermaid
-flowchart TB
-    subgraph TX ["Поток транзакций"]
-        S["Switch / LoggerClient"]
-        X["smp.transactions<br/>topic, durable"]
-        Q["transaction-log<br/>durable<br/>x-max-delivery=3 в декларации"]
-        L["TransactionLogListener<br/>TransactionService.store"]
-        DB[("PostgreSQL transactions")]
-        DX["smp.transactions.dlx<br/>direct, durable"]
-        DQ["transaction-log-dlq<br/>durable, TTL 60000 ms"]
-    end
-    subgraph CARD ["Поток карточных событий"]
-        OB[("PostgreSQL outbox_event<br/>PENDING")]
-        P["OutboxProcessor<br/>OutboxEventProcessorImpl"]
-        CX["smp.card-events<br/>topic, durable"]
-        CQ["card-notifications<br/>durable<br/>x-max-delivery=3 в декларации"]
-        N["Notification CardEventListener"]
-        NDB[("PostgreSQL card_notifications")]
-        CDX["smp.card-events.dlx<br/>direct, durable"]
-        CDQ["card-notifications-dlq<br/>durable, TTL 60000 ms"]
-    end
-    S -.->|"publish, key transaction.log"| X
-    X -.->|"binding transaction.log"| Q
-    Q -.->|"consume"| L
-    L -->|"SYNC JDBC"| DB
-    Q -.->|"dead-letter, key transaction-log"| DX
-    DX -.->|"binding transaction-log"| DQ
-    P -->|"SYNC JDBC findPending / save status"| OB
-    P -.->|"publish, key card.EventClass"| CX
-    CX -.->|"binding card.*"| CQ
-    CQ -.->|"consume"| N
-    N -->|"SYNC JDBC save"| NDB
-    CQ -.->|"dead-letter, key card-notifications"| CDX
-    CDX -.->|"binding card-notifications"| CDQ
-    %% ceasg:{"id":"a32s28rs"} %%
-    %% mermaid-flow:pos S=174,226 X=553,226 Q=943,226 L=1407,282 DB=1795,282 DX=1407,170 DQ=1795,170 OB=658,643 P=184,583 CX=658,523 CQ=1030,523 N=1532,579 NDB=1978,579 CDX=1532,467 CDQ=1978,467
-    %% mermaid-flow:gpos TX=60,96,1857,238 CARD=53,393,2069,310
-```
+![alt text](../content/05-rabbit.png)
+[drawio](../content/05-rabbitmq.drawio)
 
 ## Точная декларация
 
@@ -65,9 +29,8 @@ Logger объявляет основную очередь с DLX-аргумен�
 | Confirm Switch | После APPROVED ждать ack до 2 с; при nack/timeout компенсировать резерв | [Настройка correlated][swconfig] есть. [LoggerClient.log()][loggerclient] не использует callback/future и возвращает `true` после `convertAndSend`. Ветка rollback вызывается при пойманном `AmqpException`, не при отдельно проверенном таймауте confirm. N-14 проверяет разрыв требования, N-15 — действующий путь. |
 | Confirm outbox | Не потерять карточное событие | В [CMS][cmsconfig] также включён correlated, но [processor][outbox] помечает PROCESSED сразу после возврата отправки. PROCESSED не доказывает ack и тем более сохранение Notification. |
 | Outbox retry | 3 попытки, затем FAILED | [OutboxProcessor][scheduler] опрашивает PENDING с `retryCount < 3`, [processor][outbox] при исключении увеличивает счётчик. По умолчанию fixed delay 1000 мс, не exponential backoff. После третьей ошибки событие остаётся в БД со статусом FAILED. Это не помещение сообщения в RabbitMQ DLQ. |
-| Consumer retry | До 3 попыток, затем DLQ | В декларациях очередей указан `x-max-delivery=3`. В [Logger config][logconfig] и [Notification config][notifyconfig] нет явной настройки трёх попыток listener retry. Из этих файлов нельзя вывести гарантию трёх обработок. Проверка N-18 должна измерять реальные вызовы consumer. |
-| DLQ TTL | 60 с | В обеих DLQ задан `x-message-ttl=60000`. Это срок хранения сообщения в DLQ, не задержка повтора и не TTL основной очереди. Обратной привязки в main queue нет. |
-
+| Consumer retry | До 3 попыток, затем DLQ | В декларациях очередей указан `x-max-delivery=3`. В [Logger config][logconfig] и [Notification config][notifyconfig] нет явной настройки трёх попыток listener retry. N-18 и N-21 измеряют реальные вызовы Logger и Notification соответственно. |
+| DLQ TTL | 60 с | В обеих DLQ задан `x-message-ttl=60000`. Это срок хранения сообщения в DLQ, не задержка повтора и не TTL основной очереди. Обратной привязки в main queue нет. Проверяется отдельно в N-22. |
 
 [oldarch]: ../../../docs/architecture.md
 [swrabbit]: ../../../services/switch/src/main/java/com/processing/config/RabbitMQConfig.java

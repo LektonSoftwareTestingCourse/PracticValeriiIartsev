@@ -2,11 +2,12 @@
 
 ## Чего не хватало и что добавлено
 
-[Исходная sequence][oldarch] объединяет happy path и короткую ветку declined, но не раскрывает BLOCKED и компенсацию при сбое публикации. В ней также переставлены CMS/BIN и лимиты/баланс. Здесь показаны только три фактических сценария. Отсутствующая логика ожидания publisher confirm и reversal `0400` перечислена отдельно текстом, без диаграммы несуществующего взаимодействия.
+[Исходная sequence][oldarch] объединяет happy path и короткую ветку declined, но не раскрывает BLOCKED и компенсацию при сбое публикации. В ней также переставлены CMS/BIN и лимиты/баланс. Ниже показаны три фактических сценария и отдельно — требуемый, но не реализованный сценарий confirm-timeout с reversal `0400`.
 
 ## Happy path
 
 ```mermaid
+%%{init: {"look":"classic","layout":"dagre","fontFamily":"Arial, sans-serif","themeVariables":{"fontFamily":"Arial, sans-serif"},"sequence":{"width":200,"actorMargin":60,"wrap":true,"wrapPadding":10}}}%%
 sequenceDiagram
     actor C as Клиент
     participant G as Gateway
@@ -54,10 +55,10 @@ sequenceDiagram
 
 Код: [Gateway routes][gatewayroutes], [RouteService.route()][route], [AuthServiceImpl.authorize()][auth], [CardServiceImpl.reserve()][cardservice], [LoggerClient.log()][loggerclient], [TransactionLogListener][loglistener], [TransactionService.store()][logservice].
 
-
 ## Declined при BLOCKED
 
 ```mermaid
+%%{init: {"look":"classic","layout":"dagre","fontFamily":"Arial, sans-serif","themeVariables":{"fontFamily":"Arial, sans-serif"},"sequence":{"width":200,"actorMargin":60,"wrap":true,"wrapPadding":10}}}%%
 sequenceDiagram
     actor C as Клиент
     participant G as Gateway
@@ -75,7 +76,7 @@ sequenceDiagram
     CMS-->>A: Карта BLOCKED
     A->>B: HTTP GET /api/bin/{bin}
     B-->>A: Данные или Optional.empty
-    A->>A: DeclineOutcome.CARD_BLOCKED
+    A->>A: DeclineOutcome.<br/>CARD_BLOCKED
     Note over A,CMS: Нет upsert usage и reserve
     A-->>S: HTTP 403, DECLINED/05, CARD_BLOCKED
     Note over S,A: AuthorizationClient читает бизнес-ответ даже при non-2xx
@@ -91,15 +92,16 @@ sequenceDiagram
     end
 ```
 
-Код: [DeclineOutcome][declines], [AuthControllerImpl.authorize()][authcontroller], [AuthorizationClient.callAuthorize()][authclient], [RouteController.routeTransaction()][routecontroller], [RouteService][route]. HTTP 403 **внутреннего Authorization** и HTTP 200 **Gateway/Switch** — разные контракты. Не следует ожидать 403 от внешней транзакции только потому, что карта заблокирована.
+Код: [DeclineOutcome][declines], [AuthControllerImpl.authorize()][authcontroller], [AuthorizationClient.callAuthorize()][authclient], [RouteController.routeTransaction()][routecontroller], [RouteService][route]. HTTP 403 **внутреннего Authorization** и HTTP 200 **Gateway/Switch** — разные контракты.
 
 ## Реальная компенсация при ошибке публикации
 
 ```mermaid
+%%{init: {"look":"classic","layout":"dagre","fontFamily":"Arial, sans-serif","themeVariables":{"fontFamily":"Arial, sans-serif"},"sequence":{"width":200,"actorMargin":60,"wrap":true,"wrapPadding":10}}}%%
 sequenceDiagram
     actor C as Клиент
-    participant S as Switch через Gateway
-    participant P as LoggerClient / RabbitTemplate
+    participant S as Switch через<br/>Gateway
+    participant P as LoggerClient /<br/>RabbitTemplate
     participant A as Authorization
     participant CMS as Card Management
     participant DB as PostgreSQL
@@ -127,9 +129,37 @@ sequenceDiagram
 
 Код: [LoggerClient][loggerclient] ловит `AmqpException`; [RouteService][route] инициирует rollback только для первоначального APPROVED. [AuthorizationClient.rollback()][authclient] создаёт [RollbackRequest][rollbackrequest]. [AuthServiceImpl.rollback()][auth] и [CardServiceImpl.rollback()][cardservice] реализуют компенсацию. При исходном DECLINED ошибка логирования не инициирует rollback.
 
-## Что не реализовано: ожидание confirm и reversal 0400
+## Требуемый сценарий: confirm-timeout и reversal 0400
 
-**Сценарий «нет publisher confirm за 2 секунды → reversal `0400` → DECLINED/96» в текущем коде не реализован.**
+Сценарий из задания А4–А5 и [ТЗ Authorization: reversal][authtz]. **Эта диаграмма описывает требование, а не текущую реализацию.** Показано продолжение успешной авторизации с уже созданным резервом; HTTP-маршрут приёма reversal `0400` в коде отсутствует.
+
+```mermaid
+%%{init: {"look":"classic","layout":"dagre","fontFamily":"Arial, sans-serif","themeVariables":{"fontFamily":"Arial, sans-serif"},"sequence":{"width":200,"actorMargin":60,"wrap":true,"wrapPadding":10}}}%%
+sequenceDiagram
+    actor C as Клиент
+    participant G as Gateway
+    participant S as Switch
+    participant R as RabbitMQ
+    participant A as Authorization
+    participant CMS as Card Management
+    participant DB as PostgreSQL
+    Note over S,DB: Требование: авторизация APPROVED, резерв создан
+    S-)R: ASYNC AMQP · публикация транзакции
+    Note over S,R: Publisher confirm не получен за 2 с
+    S->>A: SYNC HTTP · reversal, mti=0400<br/>связь с исходными rrn, pan, amount
+    A->>CMS: SYNC HTTP · отмена резерва
+    CMS->>DB: SYNC JDBC · возврат суммы, резерв ROLLED_BACK
+    DB-->>CMS: COMMIT
+    CMS-->>A: Компенсация успешна
+    A->>DB: SYNC JDBC · отмена расхода по исходной операции
+    DB-->>A: COMMIT usage
+    A-->>S: Результат reversal
+    S-->>G: HTTP 200, DECLINED/96
+    G-->>C: HTTP 200, DECLINED/96
+    Note over S,R: Timeout confirm не доказывает,<br/>что публикация не дошла до брокера
+```
+
+### Отличия от кода
 
 | Чего нет | Что есть в коде |
 |---|---|
@@ -137,9 +167,6 @@ sequenceDiagram
 | Компенсации по nack или истечению таймаута confirm | [LoggerClient][loggerclient] возвращает `false` при синхронном `AmqpException`. Только этот результат после первоначального APPROVED запускает rollback в [RouteService.route()][route]. Отдельной обработки nack/confirm-timeout в этом пути нет. |
 | Отправки reversal-сообщения с `mti=0400` при компенсации | [AuthorizationClient.rollback()][authclient] отправляет HTTP `POST /api/internal/rollback` с [RollbackRequest][rollbackrequest]: `rrn`, `pan`, `amount`, без MTI. Метод [AuthorizationRequest.forReversal()][authrequest] создаёт DTO с `0400`, но вызовов этого метода в коде нет. |
 | Приёма `mti=0400` через транзакционный вход Gateway | [TransactionRequestValidator][validator] принимает только `0100`; другое значение MTI отклоняется валидацией. |
-
-Таким образом, HTTP-rollback на предыдущей диаграмме существует, но это **не реализация reversal `0400` и не реакция на таймаут confirm**. Ответ APPROVED сейчас не обусловлен получением подтверждения брокера.
-
 
 [oldarch]: ../../../docs/architecture.md
 [gatewayroutes]: ../../../services/gateway/src/main/resources/application.yml
@@ -157,3 +184,4 @@ sequenceDiagram
 [swconfig]: ../../../services/switch/src/main/resources/application.yml
 [authrequest]: ../../../services/common/src/main/java/com/processing/common/dto/authorization/AuthorizationRequest.java
 [validator]: ../../../services/gateway/src/main/java/com/processing/gateway/validation/TransactionRequestValidator.java
+[authtz]: ../../../tz/04-authorization.md
