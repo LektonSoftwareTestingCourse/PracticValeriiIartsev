@@ -1,0 +1,207 @@
+<mxfile host="65bd71144e" compressed="false" pages="2">
+    <diagram id="06-state-transition-1" name="Статусы карты">
+        <mxGraphModel dx="1226" dy="1558" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1320" pageHeight="1610" background="#ffffff" math="0" shadow="0" adaptiveColors="auto">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="page-title" parent="1" style="html=1;fontFamily=Arial;text;strokeColor=none;fillColor=none;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=28;fontColor=#0f172a;fontStyle=1;spacing=0;" value="А6 · Состояния карты" vertex="1">
+                    <mxGeometry height="44" width="1250" x="35" y="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="start" parent="1" style="html=1;fontFamily=Arial;shape=ellipse;fillColor=#0f172a;strokeColor=#0f172a;strokeWidth=2;" value="" vertex="1">
+                    <mxGeometry height="26" width="26" x="619" y="215" as="geometry"/>
+                </mxCell>
+                <mxCell id="ACTIVE" parent="1" style="html=1;fontFamily=Arial;rounded=1;arcSize=12;whiteSpace=wrap;fillColor=#ecfdf5;strokeColor=#059669;strokeWidth=1.5;fontColor=#065f46;fontSize=15;spacing=14;" value="&lt;b&gt;ACTIVE&lt;/b&gt;" vertex="1">
+                    <mxGeometry height="85" width="235" x="515" y="325" as="geometry"/>
+                </mxCell>
+                <mxCell id="INACTIVE" parent="1" style="html=1;fontFamily=Arial;rounded=1;arcSize=12;whiteSpace=wrap;fillColor=#f1f5f9;strokeColor=#64748b;strokeWidth=1.5;fontColor=#334155;fontSize=15;spacing=14;" value="&lt;b&gt;INACTIVE&lt;/b&gt;" vertex="1">
+                    <mxGeometry height="85" width="235" x="135" y="785" as="geometry"/>
+                </mxCell>
+                <mxCell id="BLOCKED" parent="1" style="html=1;fontFamily=Arial;rounded=1;arcSize=12;whiteSpace=wrap;fillColor=#fff1f2;strokeColor=#e11d48;strokeWidth=1.5;fontColor=#9f1239;fontSize=15;spacing=14;" value="&lt;b&gt;BLOCKED&lt;/b&gt;" vertex="1">
+                    <mxGeometry height="85" width="235" x="935" y="785" as="geometry"/>
+                </mxCell>
+                <mxCell id="EXPIRED" parent="1" style="html=1;fontFamily=Arial;rounded=1;arcSize=12;whiteSpace=wrap;fillColor=#fffbeb;strokeColor=#d97706;strokeWidth=1.5;fontColor=#92400e;fontSize=15;spacing=14;" value="&lt;b&gt;EXPIRED&lt;/b&gt;" vertex="1">
+                    <mxGeometry height="85" width="235" x="515" y="585" as="geometry"/>
+                </mxCell>
+                <mxCell id="DELETED" parent="1" style="html=1;fontFamily=Arial;rounded=1;arcSize=12;whiteSpace=wrap;fillColor=#fff1f2;strokeColor=#e11d48;strokeWidth=1.5;fontColor=#9f1239;fontSize=15;spacing=14;" value="&lt;b&gt;DELETED&lt;/b&gt;" vertex="1">
+                    <mxGeometry height="85" width="235" x="515" y="1185" as="geometry"/>
+                </mxCell>
+                <mxCell id="finish" parent="1" style="html=1;fontFamily=Arial;shape=ellipse;fillColor=#0f172a;strokeColor=#0f172a;strokeWidth=2;shape=doubleEllipse;" value="" vertex="1">
+                    <mxGeometry height="26" width="26" x="619" y="1395" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-1" edge="1" parent="1" source="start" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=none;exitX=0.50000;exitY=1.00000;exitDx=0;exitDy=0;entryX=0.49787;entryY=0.00000;entryDx=0;entryDy=0;" target="ACTIVE" value="createCard">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="73.5" y="-5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-2" edge="1" parent="1" source="ACTIVE" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=none;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=0.50000;entryY=0.00000;entryDx=0;entryDy=0;startArrow=block;startFill=1;" target="INACTIVE" value="patchCard">
+                    <mxGeometry relative="1" x="-0.285" y="10" as="geometry">
+                        <mxPoint as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="252.5" y="390"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-4" edge="1" parent="1" source="ACTIVE" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=none;exitX=1.00000;exitY=0.50000;exitDx=0;exitDy=0;entryX=0.50000;entryY=0.00000;entryDx=0;entryDy=0;startArrow=block;startFill=1;" target="BLOCKED" value="patchCard">
+                    <mxGeometry relative="1" x="-0.0139" y="17" as="geometry">
+                        <mxPoint x="1" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="1052.5" y="367.5"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-6" edge="1" parent="1" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=none;exitX=0.50000;exitY=1.00000;exitDx=0;exitDy=0;entryX=0.50000;entryY=0.00000;entryDx=0;entryDy=0;startArrow=block;startFill=1;" value="patchCard">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="71" y="-9.5" as="offset"/>
+                        <mxPoint x="632.0000000000002" y="409.9999999999999" as="sourcePoint"/>
+                        <mxPoint x="632.0000000000002" y="585" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-8" edge="1" parent="1" source="INACTIVE" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=none;exitX=1.00000;exitY=0.50000;exitDx=0;exitDy=0;entryX=0.00000;entryY=0.50000;entryDx=0;entryDy=0;startArrow=block;startFill=1;" target="BLOCKED" value="patchCard">
+                    <mxGeometry relative="1" x="-0.469" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-10" edge="1" parent="1" source="INACTIVE" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=none;exitX=1.00000;exitY=0.00000;exitDx=0;exitDy=0;entryX=0.00000;entryY=0.50000;entryDx=0;entryDy=0;startArrow=block;startFill=1;" target="EXPIRED" value="patchCard">
+                    <mxGeometry relative="1" x="0.3719" y="8" as="geometry">
+                        <mxPoint as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="370" y="627.5"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-12" edge="1" parent="1" source="BLOCKED" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=none;exitX=0.111;exitY=-0.001;exitDx=0;exitDy=0;startArrow=block;startFill=1;exitPerimeter=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="EXPIRED" value="patchCard">
+                    <mxGeometry relative="1" x="0.2333" y="-9" as="geometry">
+                        <mxPoint as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="960" y="630"/>
+                        </Array>
+                        <mxPoint x="760" y="630" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-14" edge="1" parent="1" source="ACTIVE" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=none;exitX=0.00000;exitY=0.50000;exitDx=0;exitDy=0;entryX=0.00000;entryY=0.70588;entryDx=0;entryDy=0;" target="DELETED" value="deleteCard">
+                    <mxGeometry relative="1" x="-0.1892" y="-5" as="geometry">
+                        <mxPoint y="1" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="75" y="367.5"/>
+                            <mxPoint x="75" y="1245"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-15" edge="1" parent="1" source="INACTIVE" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=none;exitX=0.50000;exitY=1.00000;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="DELETED" value="deleteCard">
+                    <mxGeometry relative="1" x="-0.3797" y="8" as="geometry">
+                        <mxPoint as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="252.5" y="1220"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-16" edge="1" parent="1" source="BLOCKED" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=none;exitX=0.50000;exitY=1.00000;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="DELETED" value="deleteCard">
+                    <mxGeometry relative="1" x="-0.3636" y="-12" as="geometry">
+                        <mxPoint x="-1" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="1052.5" y="1227.5"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-17" edge="1" parent="1" source="EXPIRED" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=none;exitX=0.50000;exitY=1.00000;exitDx=0;exitDy=0;entryX=0.50000;entryY=0.00000;entryDx=0;entryDy=0;" target="DELETED" value="deleteCard">
+                    <mxGeometry relative="1" x="0.0874" y="8" as="geometry">
+                        <mxPoint x="-1" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-18" edge="1" parent="1" source="DELETED" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=none;exitX=0.50000;exitY=1.00000;exitDx=0;exitDy=0;entryX=0.50000;entryY=0.00000;entryDx=0;entryDy=0;" target="finish" value="Скрыта от API">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="85.25" y="5.5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="footer" parent="1" style="html=1;fontFamily=Arial;text;strokeColor=none;fillColor=none;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=13;fontColor=#64748b;fontStyle=0;spacing=0;" value="Двунаправленная стрелка patchCard = PATCH разрешён в обе стороны. deleteCard = DELETE /api/cards/{pan}. DELETED скрыта от API.&lt;br&gt;Начальный переход ACTIVE относится к одиночному createCard. PATCH без смены статуса (петля) не показан." vertex="1">
+                    <mxGeometry height="65" width="1250" x="35" y="1515" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="06-state-transition-2" name="Покупка и компенсация">
+        <mxGraphModel dx="1300" dy="1652" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1338" pageHeight="1698" background="#ffffff" math="0" shadow="0" adaptiveColors="auto">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="page-title" parent="1" style="html=1;fontFamily=Arial;text;strokeColor=none;fillColor=none;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=28;fontColor=#0f172a;fontStyle=1;spacing=0;" value="А6 · Покупка и компенсация" vertex="1">
+                    <mxGeometry height="44" width="1268" x="50" y="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="CHECK" parent="1" style="html=1;fontFamily=Arial;rounded=1;arcSize=12;whiteSpace=wrap;fillColor=#eff6ff;strokeColor=#2563eb;strokeWidth=1.5;fontColor=#1e3a8a;fontSize=15;spacing=14;" value="&lt;b&gt;Проверки и reserve&lt;br/&gt;в Authorization&lt;/b&gt;" vertex="1">
+                    <mxGeometry height="85" width="235" x="202" y="468" as="geometry"/>
+                </mxCell>
+                <mxCell id="RESERVED" parent="1" style="html=1;fontFamily=Arial;rounded=1;arcSize=12;whiteSpace=wrap;fillColor=#eff6ff;strokeColor=#2563eb;strokeWidth=1.5;fontColor=#1e3a8a;fontSize=15;spacing=14;" value="&lt;b&gt;APPROVED в Authorization&lt;br/&gt;Резерв RESERVED&lt;/b&gt;" vertex="1">
+                    <mxGeometry height="85" width="235" x="478" y="793" as="geometry"/>
+                </mxCell>
+                <mxCell id="APPROVED" parent="1" style="html=1;fontFamily=Arial;rounded=1;arcSize=12;whiteSpace=wrap;fillColor=#ecfdf5;strokeColor=#059669;strokeWidth=1.5;fontColor=#065f46;fontSize=15;spacing=14;" value="&lt;b&gt;APPROVED клиенту&lt;/b&gt;" vertex="1">
+                    <mxGeometry height="85" width="235" x="438" y="1118" as="geometry"/>
+                </mxCell>
+                <mxCell id="DECLINED" parent="1" style="html=1;fontFamily=Arial;rounded=1;arcSize=12;whiteSpace=wrap;fillColor=#fff1f2;strokeColor=#e11d48;strokeWidth=1.5;fontColor=#9f1239;fontSize=15;spacing=14;" value="&lt;b&gt;DECLINED клиенту&lt;br/&gt;Причина отказа из Authorization&lt;/b&gt;" vertex="1">
+                    <mxGeometry height="85" width="266" x="147" y="793" as="geometry"/>
+                </mxCell>
+                <mxCell id="COMPENSATING" parent="1" style="html=1;fontFamily=Arial;rounded=1;arcSize=12;whiteSpace=wrap;fillColor=#fffbeb;strokeColor=#d97706;strokeWidth=1.5;fontColor=#92400e;fontSize=15;spacing=14;" value="&lt;b&gt;Попытка HTTP-компенсации&lt;/b&gt;" vertex="1">
+                    <mxGeometry height="85" width="248" x="738" y="1118" as="geometry"/>
+                </mxCell>
+                <mxCell id="ROLLED_BACK" parent="1" style="html=1;fontFamily=Arial;rounded=1;arcSize=12;whiteSpace=wrap;fillColor=#ecfdf5;strokeColor=#059669;strokeWidth=1.5;fontColor=#065f46;fontSize=15;spacing=14;" value="&lt;b&gt;Резерв ROLLED_BACK&lt;br/&gt;Клиенту DECLINED/96&lt;/b&gt;" vertex="1">
+                    <mxGeometry height="85" width="235" x="703" y="1443" as="geometry"/>
+                </mxCell>
+                <mxCell id="UNRESOLVED" parent="1" style="html=1;fontFamily=Arial;rounded=1;arcSize=12;whiteSpace=wrap;fillColor=#fff1f2;strokeColor=#e11d48;strokeWidth=1.5;fontColor=#9f1239;fontSize=15;spacing=14;" value="&lt;b&gt;Компенсация не подтверждена&lt;br/&gt;Клиенту DECLINED/96&lt;/b&gt;" vertex="1">
+                    <mxGeometry height="85" width="265" x="1003" y="1443" as="geometry"/>
+                </mxCell>
+                <mxCell id="start" parent="1" style="html=1;fontFamily=Arial;shape=ellipse;fillColor=#0f172a;strokeColor=#0f172a;strokeWidth=2;" value="" vertex="1">
+                    <mxGeometry height="26" width="26" x="307" y="220" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge-1" edge="1" parent="1" source="start" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=0.50000;exitY=1.00000;exitDx=0;exitDy=0;entryX=0.50213;entryY=0.00000;entryDx=0;entryDy=0;" target="CHECK" value="Запрос авторизации">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-72" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-2" edge="1" parent="1" source="CHECK" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=0.33191;exitY=1.00000;exitDx=0;exitDy=0;entryX=0.50000;entryY=0.00000;entryDx=0;entryDy=0;" target="DECLINED" value="Проверка не пройдена&lt;br&gt;или обработана ошибка reserve">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-106" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-3" edge="1" parent="1" source="CHECK" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=0.66809;exitY=1.00000;exitDx=0;exitDy=0;entryX=0.50213;entryY=0.00000;entryDx=0;entryDy=0;" target="RESERVED" value="Usage увеличен&lt;br&gt;reserve выполнен">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="3.5" y="-57" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="359" y="730"/>
+                            <mxPoint x="596" y="730"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-4" edge="1" parent="1" source="RESERVED" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=0.33191;exitY=1.00000;exitDx=0;exitDy=0;entryX=0.50213;entryY=0.00000;entryDx=0;entryDy=0;" target="APPROVED" value="log() = true&lt;br&gt;convertAndSend без AmqpException">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-119" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-5" edge="1" parent="1" source="RESERVED" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=0.66809;exitY=1.00000;exitDx=0;exitDy=0;entryX=0.50000;entryY=0.00000;entryDx=0;entryDy=0;" target="COMPENSATING" value="log() = false&lt;br&gt;AmqpException при публикации">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="51" y="-57" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="635" y="1055"/>
+                            <mxPoint x="862" y="1055"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-6" edge="1" parent="1" source="COMPENSATING" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=0.33468;exitY=1.00000;exitDx=0;exitDy=0;entryX=0.50213;entryY=0.00000;entryDx=0;entryDy=0;" target="ROLLED_BACK" value="HTTP rollback вернул APPROVED">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-114.5" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="edge-7" edge="1" parent="1" source="COMPENSATING" style="html=1;fontFamily=Arial;fontSize=13;fontColor=#475569;strokeColor=#64748b;strokeWidth=1.6;endArrow=block;endFill=1;rounded=1;arcSize=12;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=0.66532;exitY=1.00000;exitDx=0;exitDy=0;entryX=0.50189;entryY=0.00000;entryDx=0;entryDy=0;" target="UNRESOLVED" value="Rollback вернул DECLINED&lt;br&gt;или клиент получил null">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="35.5" y="-57" as="offset"/>
+                        <Array as="points">
+                            <mxPoint x="903" y="1380"/>
+                            <mxPoint x="1136" y="1380"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="footer" parent="1" style="html=1;fontFamily=Arial;text;strokeColor=none;fillColor=none;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=13;fontColor=#64748b;fontStyle=0;spacing=0;" value="TransactionStatus: APPROVED / DECLINED. ReservationStatus: RESERVED / ROLLED_BACK — отдельный тип.&lt;br&gt;log() = true не доказывает publisher confirm. HTTP rollback не восстанавливает limit_usage." vertex="1">
+                    <mxGeometry height="65" width="1268" x="35" y="1603" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
