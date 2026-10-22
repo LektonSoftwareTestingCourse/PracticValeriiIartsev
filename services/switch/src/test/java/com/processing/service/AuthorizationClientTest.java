@@ -200,7 +200,8 @@ class AuthorizationClientTest {
     }
 
     static Stream<RollbackResponse> invalidRollbackResponses() {
-        return Stream.of(null, new RollbackResponse("123456789012", "00", "PENDING", null, 0),
+        return Stream.of(null,
+                new RollbackResponse("123456789012", "00", "PENDING", null, 0),
                 new RollbackResponse("123456789012", "00", null, null, 0));
     }
 
