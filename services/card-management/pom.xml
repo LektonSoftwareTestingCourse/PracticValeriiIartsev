@@ -152,6 +152,10 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
@@ -202,6 +206,7 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <configuration>
                     <excludeGeneratedSources>true</excludeGeneratedSources>
+                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
                 </configuration>
             </plugin>
             <plugin>
@@ -212,8 +217,7 @@
                         <exclude>**/load/**/*.java</exclude>
                     </excludes>
                     <argLine>
-                        -javaagent:${settings.localRepository}/net/bytebuddy/byte-buddy-agent/1.15.11/byte-buddy-agent-1.15.11.jar
-                        -XX:+EnableDynamicAgentLoading
+                        @{argLine} ${mockito.agent.argLine}
                     </argLine>
                 </configuration>
             </plugin>
