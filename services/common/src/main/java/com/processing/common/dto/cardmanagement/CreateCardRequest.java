@@ -7,6 +7,7 @@ import com.processing.common.dto.annotations.NotNegative;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 
@@ -19,6 +20,7 @@ public record CreateCardRequest(
     String bin,
 
     @NotBlank
+    @Size(max = 255)
     @Pattern(
         regexp = "^[A-Z\\s\\-\\.']+$",
         message = "Cardholder name can contain only uppercase letters, spaces, ', dots and -"

@@ -17,6 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import org.springframework.stereotype.Service;
 
@@ -49,14 +51,14 @@ public class AuthServiceImpl implements AuthService {
             return DeclineOutcome.CARD_NOT_FOUND.buildAuthorization(request, requestInputTime);
         } catch (ServiceUnavailableException | ResourceAccessException | InternalCardManagerException e) {
             eventNotifier.notify(new AuthServiceAuthDeclineNoServiceEvent(request.pan(), "cmsUrl", e.getMessage()));
-            return DeclineOutcome.SERVICE_UNAVAILABLE.buildAuthorization(request, requestInputTime);
+            return DeclineOutcome.ISSUER_TIMEOUT.buildAuthorization(request, requestInputTime);
         } catch (PaymentRequiredException e) {
             eventNotifier.notify(new AuthServiceAuthDeclinedCardStatusEvent(request.pan(),
                     "Payment required from Card Management Service"));
             return DeclineOutcome.CARD_BLOCKED.buildAuthorization(request, requestInputTime);
         } catch (GetCardException e) {
             eventNotifier.notify(new AuthServiceAuthDeclineNoServiceEvent(request.pan(), "cmsUrl", e.getMessage()));
-            return DeclineOutcome.SERVICE_UNAVAILABLE.buildAuthorization(request, requestInputTime);
+            return DeclineOutcome.ISSUER_TIMEOUT.buildAuthorization(request, requestInputTime);
         } catch (Exception e) {
             eventNotifier.notify(new AuthServiceAuthDeclineUnknownEvent(request.pan(), e.getMessage()));
             return DeclineOutcome.UNKNOWN_REASON.buildAuthorization(request, requestInputTime);
@@ -111,11 +113,6 @@ public class AuthServiceImpl implements AuthService {
             return DeclineOutcome.CARD_EXPIRED.buildAuthorization(request, requestInputTime);
         }
 
-        if (request.amount().compareTo(cardResponse.availableBalance()) > 0) {
-            eventNotifier.notify(new AuthServiceAuthDeclinedFundsEvent(request.pan()));
-            return DeclineOutcome.INSUFFICIENT_FUNDS.buildAuthorization(request, requestInputTime);
-        }
-
         LocalDate transmissionLocalDate = request.transmissionDateTime()
                 .atZone(ZoneOffset.UTC) // TODO: msc
                 .toLocalDate();
@@ -146,6 +143,21 @@ public class AuthServiceImpl implements AuthService {
             return DeclineOutcome.EXCEEDS_AMOUNT_LIMIT.buildAuthorization(request, requestInputTime);
         }
 
+        AuthorizationResponse response = authorizeWithReservation(cardResponse, request, requestInputTime);
+        if (!AuthorizationResponse.STATUS_APPROVED.equals(response.status())
+                && TransactionSynchronizationManager.isActualTransactionActive()) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+        }
+        return response;
+    }
+
+    private AuthorizationResponse authorizeWithReservation(
+            CardModel cardResponse, AuthorizationRequest request, Instant requestInputTime) {
+        if (request.amount().compareTo(cardResponse.availableBalance()) > 0) {
+            eventNotifier.notify(new AuthServiceAuthDeclinedFundsEvent(request.pan()));
+            return DeclineOutcome.INSUFFICIENT_FUNDS.buildAuthorization(request, requestInputTime);
+        }
+
         String rrn = generateRRN();
         try {
             cardManagementClient.reserve(request.amount(), rrn, request.pan());
@@ -154,7 +166,7 @@ public class AuthServiceImpl implements AuthService {
             return DeclineOutcome.CARD_NOT_FOUND.buildAuthorization(request, requestInputTime);
         } catch (ServiceUnavailableException | ResourceAccessException | InternalCardManagerException e) {
             eventNotifier.notify(new AuthServiceAuthDeclineNoServiceEvent(request.pan(), "cmsUrl", e.getMessage()));
-            return DeclineOutcome.SERVICE_UNAVAILABLE.buildAuthorization(request, requestInputTime);
+            return DeclineOutcome.ISSUER_TIMEOUT.buildAuthorization(request, requestInputTime);
         } catch (InvalidReserveRequestException e) {
             eventNotifier.notify(new AuthServiceAuthDeclineNoCardEvent(request.pan()));
             return DeclineOutcome.CARD_NOT_FOUND.buildAuthorization(request, requestInputTime);

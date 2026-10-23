@@ -152,6 +152,23 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <configuration>
+                    <rules>
+                        <rule>
+                            <includes>
+                                <include>com.processing.cardmanagement.models.Card</include>
+                                <include>com.processing.cardmanagement.models.Reservation</include>
+                                <include>com.processing.cardmanagement.services.CardServiceImpl</include>
+                                <include>com.processing.cardmanagement.services.CardGeneratorService</include>
+                                <include>com.processing.cardmanagement.services.LuhnValidator</include>
+                            </includes>
+                        </rule>
+                    </rules>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
@@ -202,6 +219,7 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <configuration>
                     <excludeGeneratedSources>true</excludeGeneratedSources>
+                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
                 </configuration>
             </plugin>
             <plugin>
@@ -212,6 +230,7 @@
                         <exclude>**/load/**/*.java</exclude>
                     </excludes>
                     <argLine>
+                        @{argLine}
                         -javaagent:${settings.localRepository}/net/bytebuddy/byte-buddy-agent/1.15.11/byte-buddy-agent-1.15.11.jar
                         -XX:+EnableDynamicAgentLoading
                     </argLine>
