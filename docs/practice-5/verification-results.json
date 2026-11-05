@@ -1,0 +1,547 @@
+{
+  "verified_at_utc": "2026-11-05T18:14:36.411382+00:00",
+  "base_commit": "2487db26db00d44232ab2b51373697ca56be10eb",
+  "environment": {
+    "os": "macOS ARM64",
+    "java": "21.0.11",
+    "maven": "3.10.0",
+    "docker": "Colima, 4 CPU, 8 GiB"
+  },
+  "regression_runs": [
+    {
+      "run": 1,
+      "tests": 403,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "checkstyle_violations": 0,
+      "classes": [
+        {
+          "name": "com.processing.api.AdditionalValidationApiTest",
+          "tests": 31,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 0.597,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.AuthorizationApiTest",
+          "tests": 30,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 1.531,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.CardsApiTest",
+          "tests": 46,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 0.911,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.CardsQueryApiTest",
+          "tests": 22,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 0.876,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.FailureRecoveryApiTest",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 68.807,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.GatewayApiTest",
+          "tests": 54,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 1.735,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.HttpContractInventoryTest",
+          "tests": 15,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 0.485,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.InternalValidationApiTest",
+          "tests": 37,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 1.936,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.LoggerApiTest",
+          "tests": 77,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 2.748,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.OperationsApiTest",
+          "tests": 24,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 0.385,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.RollbackApiTest",
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 0.457,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.SearchApiTest",
+          "tests": 35,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 1.817,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.SimulatorApiTest",
+          "tests": 23,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 6.58,
+          "timestamp": null
+        }
+      ]
+    },
+    {
+      "run": 2,
+      "tests": 403,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "checkstyle_violations": 0,
+      "classes": [
+        {
+          "name": "com.processing.api.AdditionalValidationApiTest",
+          "tests": 31,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 0.602,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.AuthorizationApiTest",
+          "tests": 30,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 1.385,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.CardsApiTest",
+          "tests": 46,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 0.945,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.CardsQueryApiTest",
+          "tests": 22,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 0.831,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.FailureRecoveryApiTest",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 128.703,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.GatewayApiTest",
+          "tests": 54,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 1.864,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.HttpContractInventoryTest",
+          "tests": 15,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 0.418,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.InternalValidationApiTest",
+          "tests": 37,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 1.911,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.LoggerApiTest",
+          "tests": 77,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 2.808,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.OperationsApiTest",
+          "tests": 24,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 0.37,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.RollbackApiTest",
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 0.423,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.SearchApiTest",
+          "tests": 35,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 2.069,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.SimulatorApiTest",
+          "tests": 23,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 6.695,
+          "timestamp": null
+        }
+      ]
+    },
+    {
+      "run": 3,
+      "tests": 403,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "checkstyle_violations": 0,
+      "classes": [
+        {
+          "name": "com.processing.api.AdditionalValidationApiTest",
+          "tests": 31,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 0.563,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.AuthorizationApiTest",
+          "tests": 30,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 1.36,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.CardsApiTest",
+          "tests": 46,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 0.787,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.CardsQueryApiTest",
+          "tests": 22,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 0.779,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.FailureRecoveryApiTest",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 125.672,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.GatewayApiTest",
+          "tests": 54,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 1.818,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.HttpContractInventoryTest",
+          "tests": 15,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 0.455,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.InternalValidationApiTest",
+          "tests": 37,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 1.908,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.LoggerApiTest",
+          "tests": 77,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 2.801,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.OperationsApiTest",
+          "tests": 24,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 0.368,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.RollbackApiTest",
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 0.453,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.SearchApiTest",
+          "tests": 35,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 2.046,
+          "timestamp": null
+        },
+        {
+          "name": "com.processing.api.SimulatorApiTest",
+          "tests": 23,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "seconds": 6.46,
+          "timestamp": null
+        }
+      ]
+    }
+  ],
+  "known_defects": {
+    "tests": 12,
+    "failures": 12,
+    "errors": 0,
+    "tag": "known-defect",
+    "excluded_from_regression": true,
+    "cases": [
+      {
+        "test": "shouldInvalidateCardCacheAfterDeleteD11",
+        "assertion": "1 expectation failed.\nExpected status code <404> but was <200>.\n"
+      },
+      {
+        "test": "shouldApplyDefaultLimitsAndBalanceD04",
+        "assertion": "1 expectation failed.\nExpected status code <201> but was <400>.\n"
+      },
+      {
+        "test": "shouldRestoreLimitAfterRollbackD09",
+        "assertion": "1 expectation failed.\nExpected status code <200> but was <400>.\n"
+      },
+      {
+        "test": "shouldNotDebitTwiceForIdenticalAuthorizationD02",
+        "assertion": "1 expectation failed.\nJSON path availableBalance doesn't match.\nExpected: <49900>\n  Actual: <49800>\n"
+      },
+      {
+        "test": "shouldReturnResponseMti0110D01",
+        "assertion": "1 expectation failed.\nJSON path mti doesn't match.\nExpected: 0110\n  Actual: 0100\n"
+      },
+      {
+        "test": "shouldNameInvalidFieldInCardErrorD05",
+        "assertion": "1 expectation failed.\nJSON path message doesn't match.\nExpected: a string containing \"dailyLimit\"\n  Actual: Value can not be negative\n"
+      },
+      {
+        "test": "shouldRejectRollbackLargerThanReservationD08",
+        "assertion": "Multiple Failures (2 failures)\n java.lang.AssertionError: 1 expectation failed.\nExpected status code <400> but was <200>.\n\n java.lang.AssertionError: 1 expectation failed.\nJSON path availableBalance doesn't match.\nExpected: <49900>\n  Actual: <50001>\n"
+      },
+      {
+        "test": "shouldDescribeInvalidDateRangeD10",
+        "assertion": "1 expectation failed.\nJSON path message doesn't match.\nExpected: not (null or an empty string)\n  Actual: \n"
+      },
+      {
+        "test": "shouldPreserveDbUnavailableOutcomeAtHttpBoundaryD12",
+        "assertion": "1 expectation failed.\nExpected status code <400> but was <500>.\n"
+      },
+      {
+        "test": "shouldReturnExpiryInDocumentedMmyyFormatD03",
+        "assertion": "1 expectation failed.\nJSON path expiryDate doesn't match.\nExpected: a string matching the pattern '(0[1-9]|1[0-2])\\d{2}'\n  Actual: 2029-11\n"
+      },
+      {
+        "test": "shouldExplainInvalidInternalAuthorizationFieldD06",
+        "assertion": "1 expectation failed.\nJSON path message doesn't match.\nExpected: a string containing \"stan\"\n  Actual: null\n"
+      },
+      {
+        "test": "shouldRejectNullReserveAmountAsClientErrorD07",
+        "assertion": "1 expectation failed.\nExpected status code <400> but was <500>.\n"
+      }
+    ]
+  },
+  "mutation_checks": [
+    {
+      "name": "approved-code",
+      "tests": 1,
+      "failures": 1,
+      "errors": 0,
+      "exit_code": 1
+    },
+    {
+      "name": "schema-stan-length",
+      "tests": 1,
+      "failures": 1,
+      "errors": 0,
+      "exit_code": 1
+    },
+    {
+      "name": "logger-deduplication",
+      "tests": 1,
+      "failures": 1,
+      "errors": 0,
+      "exit_code": 1
+    }
+  ],
+  "pairwise": [
+    {
+      "name": "search",
+      "factors": 7,
+      "rows": [
+        0,
+        127,
+        85,
+        42,
+        51,
+        76,
+        15,
+        112
+      ],
+      "covered_pair_states": 84,
+      "missing_pair_states": 0
+    },
+    {
+      "name": "cards",
+      "factors": 6,
+      "rows": [
+        0,
+        63,
+        21,
+        42,
+        51,
+        12,
+        15,
+        48
+      ],
+      "covered_pair_states": 60,
+      "missing_pair_states": 0
+    }
+  ],
+  "source_sha256": {
+    ".github/workflows/api-tests.yml": "8141782dfcedfebc5423de764ed345fa29c445fe7c0308cbab0350b55485df13",
+    "docker-compose.api-tests.yaml": "a1329e11963bdf98f3a6bc9c618bf974578122a46cee2308bda2eec74f7bb692",
+    "scripts/check-api-tests-mutations.sh": "89c536e59eb6413a08d77d92d6f5b7d96f769c7f48173093f84670d5f2e84956",
+    "scripts/run-api-tests.sh": "87c12b905ed07d3197e183e3bb90c8252ddb3ed194b3d84a5649953ec13a1778",
+    "services/api-tests/pom.xml": "b50c54d5742ad93a7727adea33450fc0743e54e00903c05aec8910c659287fbd",
+    "services/api-tests/src/test/java/com/processing/api/AdditionalValidationApiTest.java": "373cadc0ba323b21de4f0f2e37a64f54786ea30d6972a9441dd553ef5e71a108",
+    "services/api-tests/src/test/java/com/processing/api/AuthorizationApiTest.java": "fde2ca5e117df4e025f6d6c81610571f62f2155949d50cdc2b11680947ec6a83",
+    "services/api-tests/src/test/java/com/processing/api/CardsApiTest.java": "72b4258bdbe71a441bd65baaaaad2eea6fd973280777127480bde1426e1ff93f",
+    "services/api-tests/src/test/java/com/processing/api/CardsQueryApiTest.java": "7bda1a7d1f10a59b1081f4df17d31b6a5c77bc7ea10daeb1b78b8eed1125ac56",
+    "services/api-tests/src/test/java/com/processing/api/FailureRecoveryApiTest.java": "4ac972d48b15f6028774871def105ff97ef063d0697d7693f89c5ed6a2471a1a",
+    "services/api-tests/src/test/java/com/processing/api/GatewayApiTest.java": "9cdd436fdb6d7bbb38128c7bab5e37881bab849a2cab6be6cf5d4b51dd746843",
+    "services/api-tests/src/test/java/com/processing/api/HttpContractInventoryTest.java": "f982939d27fd7fd17aa5d21f6c53044e55c8764d08d9060ca6bd3912fb7179aa",
+    "services/api-tests/src/test/java/com/processing/api/InternalValidationApiTest.java": "e062940a8347fbb0823c706acda845c4b8476d697b905839320cd3c885d9ee68",
+    "services/api-tests/src/test/java/com/processing/api/KnownContractDefectsTest.java": "ff198a71052fbed622197dc96bf9844406c2a36638056488fc50b2d747b0d4a0",
+    "services/api-tests/src/test/java/com/processing/api/LoggerApiTest.java": "2a2afa0acad58ad9a9cfa4a23324b6a7603c1fa320244aff6c4f373cdf1d06ce",
+    "services/api-tests/src/test/java/com/processing/api/OperationsApiTest.java": "327ce204c50ac48cafd6c03d197ac5e9ff5c6382ff9125d0b4b04fae14528406",
+    "services/api-tests/src/test/java/com/processing/api/RollbackApiTest.java": "5611eecfd7b545341aa2f5102669ccb540a4f9dae7b2fe105b9dcaa8a533b855",
+    "services/api-tests/src/test/java/com/processing/api/SearchApiTest.java": "ef6b08d86a8865398be16dac4e51f19fd8e32962cf2a43db2fd96de277c4c903",
+    "services/api-tests/src/test/java/com/processing/api/SimulatorApiTest.java": "94771f867ebbb47c5fca1652e393e853c4090050e73a313fea15fbd4cd2cf1b3",
+    "services/api-tests/src/test/java/com/processing/api/support/ApiSupport.java": "bf9c96c1e8242f497fb7da47e377796c86f1bc7c91a7d3f14f2a017c6e13e214",
+    "services/api-tests/src/test/java/com/processing/api/support/StackControl.java": "bebc02361ed9aa1c11c46f1f67dd63da3ba31c1db4744f671f851ac2cf29c5f5",
+    "services/api-tests/src/test/resources/schemas/authorization-response.json": "2482746f2e0a3b8cfae893be6dc889a620daf6a36697345e83b4c5e1b872dae3",
+    "services/api-tests/support/fault-proxy.py": "cd1b38a5b8dbf552b4c154ef164965551f09dd7f9bd1b818b422c373af99a772",
+    "services/api-tests/support/maven-settings.xml": "40d96132df4e392eae8b374886bcf1279a6cc022f0fdc967039d5c5d0099c197",
+    "services/pom.xml": "0b5c8b0a3964883f92bfd3f5c877024b93c6ab2579d8fe23433b3f741cdcaa3d"
+  },
+  "post_verification_changes": [
+    {
+      "verified_at_utc": "2026-11-05T21:17:34.072120+00:00",
+      "file": "docker-compose.api-tests.yaml",
+      "change": "Format-only: 13 healthcheck.test block lists converted to flow lists for IDE compatibility",
+      "original_tested_sha256": "a1329e11963bdf98f3a6bc9c618bf974578122a46cee2308bda2eec74f7bb692",
+      "current_sha256": "7bead61bb1c2e8cacfd12bac8b3dbba5fc1da342902c98327e863e84b8c11986",
+      "validation": "docker compose --env-file /dev/null -f docker-compose.api-tests.yaml config --format json: identical before and after",
+      "normalized_compose_sha256": "919c8c6f5cc4b4534d48fc92b0f2e4b3b4901abe127206f6e151cb482afc3bb3",
+      "pre_commit": "passed",
+      "regression_tests_rerun": false
+    }
+  ]
+}
