@@ -1,0 +1,350 @@
+# Isolated, disposable Practice 5 stack. Does not read .env.
+name: smp-api-tests
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: api_test
+      POSTGRES_PASSWORD: api_test
+      POSTGRES_DB: api_tests
+    volumes:
+    - pg_data:/var/lib/postgresql/data
+    networks:
+    - smp-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U api_test -d api_tests"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
+      start_period: 15s
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    environment:
+      RABBITMQ_DEFAULT_USER: api_test
+      RABBITMQ_DEFAULT_PASS: api_test
+    networks:
+    - smp-network
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "check_running"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
+      start_period: 15s
+  gateway:
+    image: smp-api/gateway:local
+    build:
+      context: .
+      dockerfile: services/gateway/Dockerfile
+    ports:
+    - 127.0.0.1:18080:8080
+    environment:
+      SERVER_PORT: '8080'
+      GATEWAY_SHUTDOWN_DRAIN_PERIOD: 30s
+      TRANSACTIONS_RATE_LIMIT_CAPACITY: '100'
+      TRANSACTIONS_RATE_LIMIT_REFILL_PER_SECOND: '100'
+      TRANSACTIONS_RATE_LIMIT_BUCKET_TTL: 10m
+      TRANSACTIONS_RATE_LIMIT_MAX_BUCKETS: '10000'
+      SWITCH_URL: http://switch:8080
+      AUTH_URL: http://authorization:8080
+      CARD_MGMT_URL: http://card-management:8080
+      LOGGER_URL: http://transaction-logger:8080
+      TERMINAL_SIM_URL: http://terminal-simulator:8080
+      MERCHANT_SIM_URL: http://merchant-acquirer:8080
+      JAVA_TOOL_OPTIONS: -Xms64m -Xmx256m -XX:ActiveProcessorCount=2
+    depends_on:
+    - switch
+    - card-management
+    - transaction-logger
+    networks:
+    - smp-network
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/health"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
+      start_period: 15s
+  card-management:
+    image: smp-api/card-management:local
+    build:
+      context: .
+      dockerfile: services/card-management/Dockerfile
+    ports:
+    - 127.0.0.1:18081:8080
+    environment:
+      SERVER_PORT: '8080'
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: '5432'
+      POSTGRES_USER: api_test
+      POSTGRES_PASSWORD: api_test
+      POSTGRES_DB: api_tests
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: '5672'
+      SPRING_RABBITMQ_USERNAME: api_test
+      SPRING_RABBITMQ_PASSWORD: api_test
+      JAVA_TOOL_OPTIONS: -Xms64m -Xmx256m -XX:ActiveProcessorCount=2
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+    - smp-network
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/health"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
+      start_period: 15s
+  switch:
+    image: smp-api/switch:local
+    build:
+      context: .
+      dockerfile: services/switch/Dockerfile
+    ports:
+    - 127.0.0.1:18082:8080
+    environment:
+      SERVER_PORT: '8080'
+      AUTH_URL: http://fault-proxy:8080/auth
+      LOGGER_URL: http://transaction-logger:8080
+      MERCHANT_URL: http://merchant-acquirer:8080
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: '5672'
+      SPRING_RABBITMQ_USERNAME: api_test
+      SPRING_RABBITMQ_PASSWORD: api_test
+      JAVA_TOOL_OPTIONS: -Xms64m -Xmx256m -XX:ActiveProcessorCount=2
+    depends_on:
+      authorization:
+        condition: service_started
+      transaction-logger:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+    networks:
+    - smp-network
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/health"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
+      start_period: 15s
+  authorization:
+    image: smp-api/authorization:local
+    build:
+      context: .
+      dockerfile: services/authorization/Dockerfile
+    ports:
+    - 127.0.0.1:18083:8080
+    environment:
+      SERVER_PORT: '8080'
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: '5432'
+      POSTGRES_USER: api_test
+      POSTGRES_PASSWORD: api_test
+      POSTGRES_DB: api_tests
+      BIN_LOOKUP_URL: http://bin-lookup:8080
+      CARD_MGMT_URL: http://fault-proxy:8080/cms
+      JAVA_TOOL_OPTIONS: -Xms64m -Xmx256m -XX:ActiveProcessorCount=2
+    depends_on:
+      postgres:
+        condition: service_healthy
+      card-management:
+        condition: service_started
+    networks:
+    - smp-network
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/health"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
+      start_period: 15s
+  bin-lookup:
+    build:
+      context: .
+      dockerfile: services/bin-lookup/Dockerfile
+    ports:
+    - 127.0.0.1:18096:8080
+    networks:
+    - smp-network
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/actuator/health"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
+      start_period: 15s
+    image: smp-api/bin-lookup:local
+    environment:
+      JAVA_TOOL_OPTIONS: -Xms64m -Xmx256m -XX:ActiveProcessorCount=2
+  notification-service:
+    build:
+      context: .
+      dockerfile: services/notification-service/Dockerfile
+    ports:
+    - 127.0.0.1:18097:8080
+    environment:
+      SERVER_PORT: '8080'
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: '5672'
+      SPRING_RABBITMQ_USERNAME: api_test
+      SPRING_RABBITMQ_PASSWORD: api_test
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: '5432'
+      POSTGRES_USER: api_test
+      POSTGRES_PASSWORD: api_test
+      POSTGRES_DB: api_tests
+      SPRING_FLYWAY_TABLE: flyway_schema_history_notification
+      SPRING_FLYWAY_BASELINE_ON_MIGRATE: 'true'
+      SPRING_FLYWAY_BASELINE_VERSION: '0'
+      JAVA_TOOL_OPTIONS: -Xms64m -Xmx256m -XX:ActiveProcessorCount=2
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    networks:
+    - smp-network
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/actuator/health"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
+      start_period: 15s
+    image: smp-api/notification-service:local
+  terminal-simulator:
+    image: smp-api/terminal-simulator:local
+    build:
+      context: .
+      dockerfile: services/terminal-simulator/Dockerfile
+    ports:
+    - 127.0.0.1:18085:8080
+    environment:
+      SERVER_PORT: '8080'
+      GATEWAY_URL: http://gateway:8080
+      CARD_MGMT_URL: http://card-management:8080
+      JAVA_TOOL_OPTIONS: -Xms64m -Xmx256m -XX:ActiveProcessorCount=2
+    depends_on:
+    - gateway
+    - card-management
+    networks:
+    - smp-network
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/health"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
+      start_period: 15s
+  merchant-acquirer:
+    image: smp-api/merchant-acquirer:local
+    build:
+      context: .
+      dockerfile: services/merchant-acquirer/Dockerfile
+    ports:
+    - 127.0.0.1:18084:8080
+    environment:
+      SERVER_PORT: '8080'
+      GATEWAY_URL: http://gateway:8080
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: '5432'
+      POSTGRES_USER: api_test
+      POSTGRES_PASSWORD: api_test
+      POSTGRES_DB: api_tests
+      SPRING_FLYWAY_BASELINE_ON_MIGRATE: 'true'
+      SPRING_FLYWAY_BASELINE_VERSION: '0'
+      JAVA_TOOL_OPTIONS: -Xms64m -Xmx256m -XX:ActiveProcessorCount=2
+    depends_on:
+    - gateway
+    networks:
+    - smp-network
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/health"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
+      start_period: 15s
+  transaction-logger:
+    image: smp-api/transaction-logger:local
+    build:
+      context: .
+      dockerfile: services/transaction-logger/Dockerfile
+    ports:
+    - 127.0.0.1:18088:8080
+    environment:
+      SERVER_PORT: '8080'
+      SPRING_AMQP_DESERIALIZATION_TRUST_ALL: 'true'
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: '5432'
+      POSTGRES_USER: api_test
+      POSTGRES_PASSWORD: api_test
+      POSTGRES_DB: api_tests
+      DASHBOARD_ORIGIN: http://localhost:3000
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: '5672'
+      SPRING_RABBITMQ_USERNAME: api_test
+      SPRING_RABBITMQ_PASSWORD: api_test
+      JAVA_TOOL_OPTIONS: -Xms64m -Xmx256m -XX:ActiveProcessorCount=2
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+    - smp-network
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/health"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
+      start_period: 15s
+  fault-proxy:
+    image: python:3.12-alpine
+    command:
+    - python
+    - /app/fault-proxy.py
+    volumes:
+    - ./services/api-tests/support/fault-proxy.py:/app/fault-proxy.py:ro
+    ports:
+    - 127.0.0.1:18099:8080
+    networks:
+    - smp-network
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8080/health')"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+  gateway-rate-limit:
+    image: smp-api/gateway:local
+    build:
+      context: .
+      dockerfile: services/gateway/Dockerfile
+    ports:
+    - 127.0.0.1:18090:8080
+    environment:
+      SERVER_PORT: '8080'
+      GATEWAY_SHUTDOWN_DRAIN_PERIOD: 30s
+      TRANSACTIONS_RATE_LIMIT_CAPACITY: '1'
+      TRANSACTIONS_RATE_LIMIT_REFILL_PER_SECOND: '1'
+      TRANSACTIONS_RATE_LIMIT_BUCKET_TTL: 10m
+      TRANSACTIONS_RATE_LIMIT_MAX_BUCKETS: '10000'
+      SWITCH_URL: http://switch:8080
+      AUTH_URL: http://authorization:8080
+      CARD_MGMT_URL: http://card-management:8080
+      LOGGER_URL: http://transaction-logger:8080
+      TERMINAL_SIM_URL: http://terminal-simulator:8080
+      MERCHANT_SIM_URL: http://merchant-acquirer:8080
+      JAVA_TOOL_OPTIONS: -Xms64m -Xmx256m -XX:ActiveProcessorCount=2
+    depends_on:
+    - switch
+    - card-management
+    - transaction-logger
+    networks:
+    - smp-network
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/health"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
+      start_period: 15s
+networks:
+  smp-network:
+    driver: bridge
+volumes:
+  pg_data: {}

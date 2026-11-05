@@ -1,0 +1,71 @@
+name: Practice 5 - API contracts
+
+on:
+  push:
+    paths:
+    - 'services/**'
+    - 'scripts/*api-tests*'
+    - 'docker-compose.api-tests.yaml'
+    - '.github/workflows/api-tests.yml'
+  pull_request:
+    paths:
+    - 'services/**'
+    - 'scripts/*api-tests*'
+    - 'docker-compose.api-tests.yaml'
+    - '.github/workflows/api-tests.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: api-tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  api-contracts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: actions/setup-java@v5
+      with:
+        distribution: temurin
+        java-version: '21'
+        cache: maven
+
+    - name: Three consecutive API regression runs
+      env:
+        API_TEST_RUNS: '3'
+        API_TEST_KEEP_STACK: '1'
+      run: ./scripts/run-api-tests.sh
+
+    - name: Check known contract violations (expected failures, see report)
+      id: defects
+      continue-on-error: true
+      run: |
+        mvn -B -s services/api-tests/support/maven-settings.xml -f services/pom.xml -Papi-tests test \
+          -Dgroups=known-defect -Dapi.excludedGroups= \
+          -Dapi.manageStack=true -Dapi.projectRoot="$GITHUB_WORKSPACE" \
+          > services/api-tests/target/evidence/known-defects.log 2>&1
+
+    - name: Explain strict contract check result
+      if: always()
+      run: |
+        echo 'Regression and strict contract checks are separate. See docs/practice-5/api-test-report.md.' >> "$GITHUB_STEP_SUMMARY"
+        echo 'Known contract check: ${{ steps.defects.outcome }}' >> "$GITHUB_STEP_SUMMARY"
+
+    - name: Collect logs and remove disposable stack
+      if: always()
+      run: |
+        mkdir -p services/api-tests/target/evidence
+        docker compose --env-file /dev/null -p smp-api-tests -f docker-compose.api-tests.yaml \
+          logs --no-color > services/api-tests/target/evidence/compose.log 2>&1 || true
+        docker compose --env-file /dev/null -p smp-api-tests -f docker-compose.api-tests.yaml \
+          down --volumes --remove-orphans --timeout 5
+
+    - uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: practice-5-api-results
+        path: |
+          services/api-tests/target/evidence/
+          services/api-tests/target/surefire-reports/
